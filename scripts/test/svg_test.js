@@ -58,11 +58,7 @@ setInterval(function(){
 	stats.end();
 },1000/30);
 
-
-////////////////
-/// STATS.JS ///
-////////////////
-
+// STATS.JS
 var stats = new Stats();
 stats.setMode(0);
 stats.domElement.style.position = 'absolute';
