@@ -12,8 +12,8 @@ function Agent(model){
 	);
 
 	// TRANSFORM
-	self.x = 400+Math.random()*300;
-	self.y = 50+Math.random()*500;
+	self.x = 50+Math.random()*450;
+	self.y = 300+Math.random()*200;
 	self.scale = 0;
 	self.getMatrix = function(){
 		var matrix = new Snap.Matrix();
@@ -25,15 +25,16 @@ function Agent(model){
 
 	// UPDATE
 	self.update = function(){
-		if(Math.random()<0.01){
+		if(Math.random()<0.005){
 			self.gotoBox("PRISON");
 		}
-		if(Math.random()<0.03){
+		if(Math.random()<0.015){
 			self.gotoBox("SCHOOL");
 		}
 	};
 	self.animate = function(){
 		self.graphics.animate( {transform:self.getMatrix()}, 500, mina.easeinout);
+		if(self.isFocus) Focus.animate();
 	};
 
 	// GO TO BOX
@@ -59,5 +60,11 @@ function Agent(model){
 	// (born anim)
 	self.scale = 1;
 	self.animate();
+
+	// Focus?
+	self.isFocus = false;
+	self.graphics.mousedown(function(){
+		Focus.setFocus(self);
+	});
 
 }

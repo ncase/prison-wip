@@ -31,7 +31,7 @@ boxes.push(new Box(model,{
 boxes.push(new Box(model,{
 
 	name:"SCHOOL",
-	x:50, y:300,
+	x:300, y:50,
 	width: 200,
 	height:200,
 	color:"#bada55"
@@ -44,6 +44,9 @@ for(var i=0;i<100;i++){
 	var agent = new Agent(model);
 	agents.push(agent);
 }
+
+// Focus - over it all
+Focus.init();
 
 // Update Loop
 setInterval(function(){
