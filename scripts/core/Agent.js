@@ -3,6 +3,9 @@ function Agent(model){
 
 	var self = this;
 
+	// Box
+	self.box = null;
+
 	// GRAPHICS
 	var color = Snap.hsl(0, 0, 40+Math.random()*40);
 	self.graphics = model.group(
@@ -25,10 +28,10 @@ function Agent(model){
 
 	// UPDATE
 	self.update = function(){
-		if(Math.random()<0.005){
+		if(Math.random()<0.01){
 			self.gotoBox("PRISON");
 		}
-		if(Math.random()<0.015){
+		if(Math.random()<0.01){
 			self.gotoBox("SCHOOL");
 		}
 	};
@@ -42,6 +45,8 @@ function Agent(model){
 
 		// Find Box
 		var box = Box.getByName(boxName);
+		if(self.box==box) return;
+		self.box = box;
 
 		// Get Box dimensions, minus own arbitrary radius
 		var border = 15;
