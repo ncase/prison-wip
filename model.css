@@ -8,6 +8,7 @@ body{
 }
 h2{
 	font-size: 48px;
+	text-align: left;
 	border-bottom: 3px solid black;
     padding-bottom: 0.25em;
     margin-top: 0.5em;
@@ -23,8 +24,8 @@ h2{
 	top: 100px;
 }
 #words{
-	width:420px;
-	padding-right: 20px;
+	width:400px;
+	padding-right: 40px;
 	padding-top: 50px;
 	padding-bottom: 50px;
 	position: absolute;
