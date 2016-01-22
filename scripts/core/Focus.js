@@ -66,6 +66,9 @@
 		agentG.remove();
 		parent.append(agentG);
 
+		// UPDATE NOW
+		Focus.update();
+
 	};
 
 	// Animate
@@ -103,7 +106,7 @@
 		var a = Focus.agent;
 
 		// Label!
-		var labelText = "age "+a.age;
+		var labelText = a.dead ? "R.I.P" : "age "+a.age;
 		Focus.label.attr({text:labelText});
 
 		// Path

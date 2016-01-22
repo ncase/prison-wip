@@ -6,6 +6,7 @@ function Agent(svg){
 	// Properties
 	self.age = 0;
 	self.excon = false;
+	self.dead = false;
 
 	// Box
 	self.box = Box.getByName("BORN");

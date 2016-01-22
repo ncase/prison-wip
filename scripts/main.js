@@ -3,7 +3,7 @@ var PARAMS = {
 	CHANCES:{
 
 		HIGH_TO_COLLEGE: 0.3,
-		HIGH_TO_JOB: 0.3,
+		HIGH_TO_JOB: 0.5,
 		HIGH_TO_PRISON: 0.01,
 
 		COLLEGE_TO_JOB: 0.9,
@@ -43,6 +43,7 @@ function updateAgent(agent){
 	// Are you 80? DIE
 	if(agent.age==PARAMS.AGES.DEATH){
 		agent.kill();
+		agent.dead = true;
 		return true;
 	}
 

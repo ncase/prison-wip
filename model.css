@@ -22,6 +22,14 @@ h2{
 	position: fixed;
 	right: calc(50% - 540px);
 	top: 100px;
+
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	user-select: none;   
+
+	cursor: default;
+
 }
 #words{
 	width:400px;
@@ -32,4 +40,15 @@ h2{
 	right: calc(50% + 100px);
 
 	text-align: justify;
+}
+.slider{
+	text-align: left;
+	font-size: 16px;
+	margin: 5px 0;
+}
+.slider input{
+	width:100%;
+}
+.slider span{
+	color:#cc2727;
 }
