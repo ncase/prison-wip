@@ -1,5 +1,5 @@
 // Class
-function Agent(svg){
+function Person(svg){
 
 	var self = this;
 

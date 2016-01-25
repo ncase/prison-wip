@@ -1,5 +1,5 @@
 // Class
-function Box(svg,config){
+function Stage(svg,config){
 
 	var self = this;
 	self.config = config;
@@ -28,7 +28,7 @@ function Box(svg,config){
 
 // Helpers
 var boxes = [];
-Box.getByName = function(name){
+Stage.getByName = function(name){
 	for(var i=0;i<boxes.length;i++){
 		var box = boxes[i];
 		if(box.name==name) return box;
