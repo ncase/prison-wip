@@ -189,12 +189,6 @@ Sim.init({
 			},
 			during: function(person){
 
-				// If the Three Strikes rule's in place,
-				// you get LIFE on your third conviction
-				if(STATS("three_strikes")){
-					if(person.convictions>=3) return;
-				}
-
 				// Sentence decreases til you're out
 				person.yearsInPrisonLeft--;
 				if(person.yearsInPrisonLeft==0){
@@ -270,10 +264,7 @@ Sim.init({
 		// Prison Stats (all upon entering)
 		"prison_sentence":{
 			value: 10
-		},
-		"three_strikes":{
-			value: true
-		},
+		}
 
 	},
 
@@ -322,12 +313,12 @@ Sim.init({
 		drawInitialize: function(person){
 
 			var g = person.graphics;
-			var color = Snap.hsl(0, 0, 40+Math.random()*40);
 
-			// Whatever shade of skin		
-			person.body = g.circle(0,0,10).attr({fill:color});
+			// Whatever shade of skin
+			var skin = Snap.hsl(0, 0, 40+Math.random()*40);
+			person.body = g.circle(0,0,10).attr({fill:skin});
 
-			// Me ALIVE eyes
+			// My ALIVE eyes
 			person.aliveEyes = g.group(
 				g.circle(-5,0,2),
 				g.circle(5,0,2)
@@ -347,6 +338,13 @@ Sim.init({
 	        	strokeWidth: 1
 			});
 
+			// My degree
+			person.degree = g.rect(4,4,6,6).attr({
+				display:"none",
+				stroke: "#ccc",
+	        	strokeWidth: 1
+			});
+
 		},
 		drawUpdate: function(person){
 
@@ -359,6 +357,17 @@ Sim.init({
 			}
 
 			// If you have a degree, show it
+			if(person.education >= STATS("edu_for_high_school_cert")){
+				person.degree.attr({display:"block"});
+				if(person.education >= STATS("edu_for_college_cert")){
+					person.degree.attr({
+						fill:"#FFD700",
+						stroke:"#DAA520"
+					}); // university diploma
+				}else{
+					person.degree.attr({fill:"#FFF"}); // high school diploma
+				}
+			}
 
 			// If you're dead, show the X eyes.
 			if(person.dead){

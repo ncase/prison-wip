@@ -45,7 +45,16 @@ Sim.update = function(){
 
 	// Update each person (they'll run their stage's during)
 	for(var i=0;i<Sim.people.length;i++){
-		Sim.people[i].update();
+
+		var person = Sim.people[i];
+		person.update();
+
+		// REMOVE_ME_PLZ
+		if(person.REMOVE_ME_PLZ){
+			Sim.people.splice(i,1);
+			i--;
+		}
+
 	}
 
 };

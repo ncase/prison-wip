@@ -22,6 +22,7 @@ function Person(stageID){
 	self.kill = function(){
 		self.dead = true;
 		self.graphics.animate( {opacity:0}, Sim.ANIM_SPEED, mina.easeinout, function(){
+			self.REMOVE_ME_PLZ = true;
 			self.graphics.remove();
 			if(Focus.person==self){
 				Focus.removeFocus(); // Remove focus from self.
@@ -31,6 +32,9 @@ function Person(stageID){
 
 	// Go to a Stage
 	self.goto = function(stageID){
+
+		// If dead, don't. do. anything.
+		if(self.dead) return;
 
 		// Find Box
 		var nextStage = Stages[stageID];
