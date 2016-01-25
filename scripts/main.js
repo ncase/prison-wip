@@ -184,28 +184,23 @@ Sim.init({
 				color:"#000"
 			},
 			welcome: function(person){
-
-				// New conviction
 				person.convictions++;
 				person.yearsInPrisonLeft = STATS("prison_sentence");
+			},
+			during: function(person){
 
 				// If the Three Strikes rule's in place,
 				// you get LIFE on your third conviction
 				if(STATS("three_strikes")){
-					if(person.convictions>=3){
-						person.yearsInPrisonLeft = 1000;
-					}
+					if(person.convictions>=3) return;
 				}
 
-			},
-			during: function(person){
+				// Sentence decreases til you're out
 				person.yearsInPrisonLeft--;
 				if(person.yearsInPrisonLeft==0){
 					return person.goto("unemployed");
 				}
-			},
-			goodbye: function(person){
-				person.excon = true;
+
 			}
 		}
 	},
@@ -263,6 +258,8 @@ Sim.init({
 		},
 
 		// Employed Stats (all Per Year)
+		// WHAT ABOUT SOCIAL MOBILITY??? //
+		// and GETTING OUTTA THIS SYSTEM //
 		"employed_convicted":{
 			value: 0.05
 		},
@@ -323,8 +320,35 @@ Sim.init({
 
 		},
 		drawInitialize: function(person){
+
+			var g = person.graphics;
+			var color = Snap.hsl(0, 0, 40+Math.random()*40);
+
+			// Whatever shade of skin		
+			person.body = g.circle(0,0,10).attr({fill:color});
+			g.add(person.body);
+
+			// Me eyes
+			person.eye1 = g.circle(-5,0,2).attr({fill:"#333"});
+			g.add(person.eye1);
+			person.eye2 = g.circle(5,0,2).attr({fill:"#333"});
+			g.add(person.eye2);
+
 		},
 		drawUpdate: function(person){
+
+			// If you've been convicted, black border
+			if(person.convictions>0){
+				person.body.attr({
+					stroke: "#000",
+	        		strokeWidth: 2
+				});
+			}
+
+			// If you have a degree, show it
+
+			// If you're dead, show the X eyes.
+
 		}
 	},
 

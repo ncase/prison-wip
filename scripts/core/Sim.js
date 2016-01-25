@@ -27,7 +27,7 @@ Sim.init = function(config){
 	}
 
 	// Focus
-	// Focus.init(Sim.model);
+	Focus.init();
 
 	// Start the update loop
 	setInterval(Sim.update, Sim.STEP_SPEED);
@@ -47,9 +47,6 @@ Sim.update = function(){
 	for(var i=0;i<Sim.people.length;i++){
 		Sim.people[i].update();
 	}
-
-	// Focus
-	// Focus.update();
 
 };
 

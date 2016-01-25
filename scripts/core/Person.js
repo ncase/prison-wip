@@ -5,21 +5,56 @@ function Person(stageID){
 
 	// Properties
 	self.dead = false;
-
-	// Stage
 	self.stage = Stages[stageID];
+	self.graphics = Sim.peopleSVG.group();
 
-	// Graphics
-	var svg = Sim.peopleSVG;
-	var color = Snap.hsl(0, 0, 40+Math.random()*40);
-	var body, eye1, eye2;
-	self.graphics = svg.group(
-		body=svg.circle(0,0,10).attr({fill:color}),
-		eye1=svg.circle(-5,0,2).attr({fill:"#333"}),
-		eye2=svg.circle(5,0,2).attr({fill:"#333"})
-	);
+	///////////////////////////////
+	////// PRIMARY FUNCTIONS //////
+	///////////////////////////////
 
-	// Transform Helpers
+	// Update
+	self.update = function(){
+		self.stage.during(self);
+		Sim.config.person.drawUpdate(self);
+	};
+
+	// Kill
+	self.kill = function(){
+		self.dead = true;
+		self.graphics.animate( {opacity:0}, Sim.ANIM_SPEED, mina.easeinout, function(){
+			self.graphics.remove();
+			if(Focus.person==self){
+				Focus.removeFocus(); // Remove focus from self.
+			}
+		});
+	}
+
+	// Go to a Stage
+	self.goto = function(stageID){
+
+		// Find Box
+		var nextStage = Stages[stageID];
+		if(self.stage==nextStage) return; // you're already here
+
+		// Do my current stage's goodbye
+		self.stage.goodbye(self);
+
+		// Go to that next stage
+		self.stage = nextStage;
+		var pos = _getRandomPositionInStage(self.stage);
+		self.x = pos.x;
+		self.y = pos.y;
+		_animate();
+
+		// Do my new stage's welcome
+		self.stage.welcome(self);
+
+	};
+
+	///////////////////////////////
+	////// ANIMATION HELPERS //////
+	///////////////////////////////
+
 	var _getRandomPositionInStage = function(stage){
 		var box = stage.layout;
 		var border = 15;
@@ -38,16 +73,14 @@ function Person(stageID){
 		matrix.scale(self.scale);
 		return matrix;
 	}
-
-	// Animation Helpers
-	self.animate = function(){
-		self.graphics.animate(
-			{transform:_getMatrix()},
-			Sim.ANIM_SPEED,
-			mina.easeinout
-		);
-		// if(self.isFocus) Focus.animate();
+	var _animate = function(){
+		self.graphics.animate( {transform:_getMatrix()}, Sim.ANIM_SPEED, mina.easeinout );
+		if(self.isFocus) Focus.animate();
 	};
+
+	//////////////////////////////////
+	////// SO, YOU'VE BEEN BORN //////
+	//////////////////////////////////
 
 	// Start at the start stage
 	var pos = _getRandomPositionInStage(self.stage);
@@ -56,61 +89,22 @@ function Person(stageID){
 	self.scale = 0; // being born
 	self.graphics.transform(_getMatrix());
 	self.scale = 1; // being born
-	self.animate(); // Animate being born
+	_animate(); // Animate being born
 
-	// BORN function
-	var born = Sim.config.person.born;
-	born(self);
+	// BORN callback
+	Sim.config.person.born(self);
 
-	// Update
-	self.update = function(){
-		self.stage.during(self);
-	};
+	// DRAW INITIALIZE callback
+	Sim.config.person.drawInitialize(self);	
 
-	// Kill
-	self.kill = function(){
-		self.dead = true;
-		self.graphics.animate(
-			{opacity:0},
-			Sim.ANIM_SPEED,
-			mina.easeinout,
-			function(){
-				self.graphics.remove();
-				//if(Focus.agent==self) Focus.removeFocus(); // Remove focus from self.
-			}
-		);
-	}
+	///////////////////////////
+	////// MISCELLANEOUS //////
+	///////////////////////////
 
-	// GO TO STAGE
-	self.goto = function(stageID){
-
-		// Find Box
-		var nextStage = Stages[stageID];
-		if(self.stage==nextStage) return; // you're already here
-
-		// Do my current stage's goodbye
-		self.stage.goodbye(self);
-
-		// Go to that next stage
-		self.stage = nextStage;
-		var pos = _getRandomPositionInStage(self.stage);
-		self.x = pos.x;
-		self.y = pos.y;
-		self.animate();
-
-		// Do my new stage's welcome
-		self.stage.welcome(self);
-
-	};
-
-	/***
-	// Focus?
+	// Focus Shtuff
 	self.isFocus = false;
-	
-	//FOR NOW, NAHHHH
 	self.graphics.mousedown(function(){
 		Focus.setFocus(self);
 	});
-	***/
 
 }
