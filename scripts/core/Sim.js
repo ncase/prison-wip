@@ -35,7 +35,7 @@ Sim.init = function(config){
 };
 
 // Update
-Sim.STEP_SPEED = 200;
+Sim.STEP_SPEED = 500;
 Sim.ANIM_SPEED = Sim.STEP_SPEED*1.5;
 Sim.update = function(){
 

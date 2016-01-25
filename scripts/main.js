@@ -326,13 +326,26 @@ Sim.init({
 
 			// Whatever shade of skin		
 			person.body = g.circle(0,0,10).attr({fill:color});
-			g.add(person.body);
 
-			// Me eyes
-			person.eye1 = g.circle(-5,0,2).attr({fill:"#333"});
-			g.add(person.eye1);
-			person.eye2 = g.circle(5,0,2).attr({fill:"#333"});
-			g.add(person.eye2);
+			// Me ALIVE eyes
+			person.aliveEyes = g.group(
+				g.circle(-5,0,2),
+				g.circle(5,0,2)
+			).attr({
+				fill:"#222"
+			});
+
+			// My DEAD eyes
+			person.deadEyes = g.group(
+				g.line(5-2,-2,5+2,2),
+				g.line(5-2,2,5+2,-2),
+				g.line(-5-2,-2,-5+2,2),
+				g.line(-5-2,2,-5+2,-2)
+			).attr({
+				display:"none",
+				stroke: "#222",
+	        	strokeWidth: 1
+			});
 
 		},
 		drawUpdate: function(person){
@@ -340,7 +353,7 @@ Sim.init({
 			// If you've been convicted, black border
 			if(person.convictions>0){
 				person.body.attr({
-					stroke: "#000",
+					stroke: "#222",
 	        		strokeWidth: 2
 				});
 			}
@@ -348,6 +361,10 @@ Sim.init({
 			// If you have a degree, show it
 
 			// If you're dead, show the X eyes.
+			if(person.dead){
+				person.aliveEyes.attr({display:"none"});
+				person.deadEyes.attr({display:""});
+			}
 
 		}
 	},
