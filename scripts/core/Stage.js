@@ -1,37 +1,30 @@
 // Class
-function Stage(svg,config){
+var Stages = {};
+function Stage(config){
 
 	var self = this;
-	self.config = config;
-	self.name = config.name;
+	self.layout = config.box;
 
-	// GRAPHICS
-	var box = svg.rect(config.x, config.y, config.width, config.height).attr({
-		stroke: config.color,
+	// Graphics
+	var layout = self.layout;
+	var svg = Sim.stagesSVG;
+	var box = svg.rect(layout.x, layout.y, layout.width, layout.height).attr({
+		stroke: layout.color,
 		strokeWidth: 5,
 		fill: 'none'
 	});
-	var label = svg.text(config.x,config.y,config.label).attr({
+	var label = svg.text(layout.x,layout.y,layout.label).attr({
 		"font-size": 25,
 		dx: "-3px",
 		dy: "-8px",
-		fill: config.color,
+		fill: layout.color,
 		fontWeight: 'normal'		
 	});
 	self.graphics = svg.group(box,label);
 
-	// UPDATE
-	self.update = function(){
-	};
+	// Functions
+	self.welcome = config.welcome || function(){};
+	self.during = config.during || function(){};
+	self.goodbye = config.goodbye || function(){};
 
 }
-
-// Helpers
-var boxes = [];
-Stage.getByName = function(name){
-	for(var i=0;i<boxes.length;i++){
-		var box = boxes[i];
-		if(box.name==name) return box;
-	}
-	return null;
-};

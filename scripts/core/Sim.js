@@ -1,47 +1,62 @@
-// Model
-var model = Snap("#model");
-var boxesSVG = model.group();
-var agentsSVG = model.group();
+(function(exports){
 
-// Focus
-Focus.init(model);
+// SINGLETON
+var Sim = {};
+exports.Sim = Sim;
 
-// Update Loop
-function update(){
+// Initialize
+Sim.config = null;
+Sim.init = function(config){
 
-	// Make new baby agent
-	var newAgent = new Agent(agentsSVG);
-	agents.push(newAgent);
+	// Make a config
+	Sim.config = config;
 
-	// For each agent...
-	for(var i=0;i<agents.length;i++){
-		var agent = agents[i];
-		var killAgent = updateAgent(agent);
-		if(killAgent){
-			agents.splice(i,1);
-			i--;
-		}
+	// The people and stages
+	Sim.people = [];
+	Sim.stages = [];
+
+	// The SVG containers
+	Sim.model = Snap("#model");
+	Sim.stagesSVG = Sim.model.group();
+	Sim.peopleSVG = Sim.model.group();
+
+	// Create Stages
+	for(var stageID in Sim.config.stages){
+		var stage = Sim.config.stages[stageID];
+		Stages[stageID] = new Stage(stage);
 	}
 
 	// Focus
-	Focus.update();
+	// Focus.init(Sim.model);
 
-}
+	// Start the update loop
+	setInterval(Sim.update, Sim.STEP_SPEED);
 
-var STEP_SPEED = 200;
-var ANIM_SPEED = STEP_SPEED*1.5;
+};
 
-setInterval(function(){
-	//stats.begin();
-	update();
-	//stats.end();
-},STEP_SPEED);
+// Update
+Sim.STEP_SPEED = 200;
+Sim.ANIM_SPEED = Sim.STEP_SPEED*1.5;
+Sim.update = function(){
 
-// STATS.JS
-/*var stats = new Stats();
-stats.setMode(0);
-stats.domElement.style.position = 'fixed';
-stats.domElement.style.right = '0px';
-stats.domElement.style.top = '0px';
-document.body.appendChild(stats.domElement);
-*/
+	// Run the OBSERVER function
+	var observe = Sim.config.observer.action;
+	observe(Sim.people);
+
+	// Update each person (they'll run their stage's during)
+	for(var i=0;i<Sim.people.length;i++){
+		Sim.people[i].update();
+	}
+
+	// Focus
+	// Focus.update();
+
+};
+
+// Helper Functions
+Sim.newPerson = function(stageID){
+	var person = new Person(stageID);
+	Sim.people.push(person);
+};
+
+})(window);

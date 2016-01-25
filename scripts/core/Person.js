@@ -1,17 +1,16 @@
 // Class
-function Person(svg){
+function Person(stageID){
 
 	var self = this;
 
 	// Properties
-	self.age = 0;
-	self.excon = false;
 	self.dead = false;
 
-	// Box
-	self.box = Box.getByName("BORN");
+	// Stage
+	self.stage = Stages[stageID];
 
-	// GRAPHICS
+	// Graphics
+	var svg = Sim.peopleSVG;
 	var color = Snap.hsl(0, 0, 40+Math.random()*40);
 	var body, eye1, eye2;
 	self.graphics = svg.group(
@@ -20,77 +19,91 @@ function Person(svg){
 		eye2=svg.circle(5,0,2).attr({fill:"#333"})
 	);
 
-	// TRANSFORM
-	var _getRandomPositionInBox = function(box){
+	// Transform Helpers
+	var _getRandomPositionInStage = function(stage){
+		var box = stage.layout;
 		var border = 15;
-		var x = box.config.x + border;
-		var y = box.config.y + border;
-		var width = box.config.width - border*2;
-		var height = box.config.height - border*2;
+		var x = box.x + border;
+		var y = box.y + border;
+		var width = box.width - border*2;
+		var height = box.height - border*2;
 		return {
 			x: x + Math.random()*width,
 			y: y + Math.random()*height
 		};
 	};
-	var pos = _getRandomPositionInBox(self.box);
-	self.x = pos.x;
-	self.y = pos.y;
-	self.scale = 0;
-	self.getMatrix = function(){
+	var _getMatrix = function(){
 		var matrix = new Snap.Matrix();
 		matrix.translate(self.x,self.y);
 		matrix.scale(self.scale);
 		return matrix;
 	}
-	self.graphics.transform(self.getMatrix());
 
-	// UPDATE
-	self.update = function(){};
-	self.animate = function(callback){
-		self.graphics.animate( {transform:self.getMatrix()}, ANIM_SPEED, mina.easeinout, callback);
-		if(self.isFocus) Focus.animate();
+	// Animation Helpers
+	self.animate = function(){
+		self.graphics.animate(
+			{transform:_getMatrix()},
+			Sim.ANIM_SPEED,
+			mina.easeinout
+		);
+		// if(self.isFocus) Focus.animate();
 	};
+
+	// Start at the start stage
+	var pos = _getRandomPositionInStage(self.stage);
+	self.x = pos.x;
+	self.y = pos.y;
+	self.scale = 0; // being born
+	self.graphics.transform(_getMatrix());
+	self.scale = 1; // being born
+	self.animate(); // Animate being born
+
+	// BORN function
+	var born = Sim.config.person.born;
+	born(self);
+
+	// Update
+	self.update = function(){
+		self.stage.during(self);
+	};
+
+	// Kill
 	self.kill = function(){
-		self.graphics.animate( {opacity:0}, ANIM_SPEED, mina.easeinout, function(){
-			self.graphics.remove();
-			//if(Focus.agent==self) Focus.removeFocus(); // Remove focus from self.
-		});
+		self.dead = true;
+		self.graphics.animate(
+			{opacity:0},
+			Sim.ANIM_SPEED,
+			mina.easeinout,
+			function(){
+				self.graphics.remove();
+				//if(Focus.agent==self) Focus.removeFocus(); // Remove focus from self.
+			}
+		);
 	}
 
-	// GO TO BOX
-	self.gotoBox = function(boxName,callback){
+	// GO TO STAGE
+	self.goto = function(stageID){
 
 		// Find Box
-		var box = Box.getByName(boxName);
-		if(self.box==box) return;
-		self.box = box;
+		var nextStage = Stages[stageID];
+		if(self.stage==nextStage) return; // you're already here
 
-		// GO THERE!
-		var pos = _getRandomPositionInBox(self.box);
+		// Do my current stage's goodbye
+		self.stage.goodbye(self);
+
+		// Go to that next stage
+		self.stage = nextStage;
+		var pos = _getRandomPositionInStage(self.stage);
 		self.x = pos.x;
 		self.y = pos.y;
-		self.animate(callback);
+		self.animate();
 
-		// Record this in history
-		// self.history.push({x:self.x, y:self.y});
+		// Do my new stage's welcome
+		self.stage.welcome(self);
 
 	};
 
-	// History
-	// self.history = [{x:self.x, y:self.y}];
-
-	// CONVICTED
-	self.getConvicted = function(){
-		body.attr({
-			stroke: "#000",
-        	strokeWidth: 2
-        });
-	};
-
-	// (born anim)
-	self.scale = 1;
-	self.animate();
-
+	/***
 	// Focus?
 	self.isFocus = false;
 	
@@ -98,9 +111,6 @@ function Person(svg){
 	self.graphics.mousedown(function(){
 		Focus.setFocus(self);
 	});
-	
+	***/
 
 }
-
-// Helpers
-var agents = [];

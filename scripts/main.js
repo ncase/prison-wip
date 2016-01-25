@@ -199,9 +199,9 @@ Sim.init({
 
 			},
 			during: function(person){
-				person.prisonYearsLeft--;
-				if(person.prisonYearsLeft==0){
-					return person.goto("UNEMPLOYED");
+				person.yearsInPrisonLeft--;
+				if(person.yearsInPrisonLeft==0){
+					return person.goto("unemployed");
 				}
 			},
 			goodbye: function(person){
@@ -326,7 +326,7 @@ Sim.init({
 		},
 		drawUpdate: function(person){
 		}
-	}
+	},
 
 	/*********
 	GRAPHS: (????)
