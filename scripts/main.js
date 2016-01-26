@@ -179,7 +179,7 @@ Sim.init({
 		*********/
 		"prison":{
 			box:{
-				label: "JAIL / PRISON",
+				label: "INCARCERATED",
 				x:10, y:350, width:620, height:120,
 				color:"#000"
 			},
@@ -293,37 +293,30 @@ Sim.init({
 	*********/
 	observer:{
 		welcome: function(people){
-			// Start with three peeps.
-			for(var i=0;i<3;i++) Sim.newPerson("born");
+			// Start with five kids.
+			//for(var i=0;i<5;i++) Sim.newPerson("born");
 		},
 		action: function(people){
 
 			// If the sim's started...
-			if(STATS("sim_start")){
+			if(!STATS("sim_start")) return;
 
-				// For every person...
-				for(var i=0;i<people.length;i++){
-					var person = people[i];
+			// For every person...
+			for(var i=0;i<people.length;i++){
+				var person = people[i];
 
-					// Age them all by one year
-					person.age++;
+				// Age them all by one year
+				person.age++;
 
-					// If too old, kill 'em off
-					if(person.age > STATS("age_for_death")){
-						person.kill();
-					}
-
+				// If too old, kill 'em off
+				if(person.age > STATS("age_for_death")){
+					person.kill();
 				}
 
-				// Every year, a new person is born (added to the "born" stage)
-				Sim.newPerson("born");
-
-			}else{
-				// Otherwise, add a newbie every whenever.
-				if(Math.random()<0.1){
-					Sim.newPerson("born");
-				}
 			}
+
+			// Every year, a new person is born (added to the "born" stage)
+			Sim.newPerson("born");
 
 		}
 	},
@@ -340,11 +333,6 @@ Sim.init({
 			person.age = 0;
 			person.education = 0;
 			person.convictions = 0;
-
-			// Actually, unless we haven't started yet...
-			if(!STATS("sim_start")){
-				person.age = Math.floor(Math.random()*STATS("age_for_school"));
-			}
 
 		},
 		drawInitialize: function(person){

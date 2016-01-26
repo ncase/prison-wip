@@ -1,0 +1,276 @@
+<!doctype>
+<html>
+<head>
+	
+	<!-- Meta -->
+	<title>Stats Sim Story</title>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<!--link rel="icon" type="image/png" href="/favicon.png"-->
+
+	<!-- Styles -->
+	<link rel="stylesheet" type="text/css" href="model.css">
+
+</head>
+<body>
+
+	<div id="content">
+		<svg id="model"></svg>
+		<div id="words">
+
+<!-- INTRODUCTION -->
+	
+<h2>
+[untitled sim]
+</h2>
+
+<p>
+You’ve probably heard the statistics a bajillion times.
+The United States has 5% of the world’s population, but 25% of the world’s prisoners.
+Our entire corrections system costs taxpayers $74,000,000,000 a year.
+One in 35 American adults,
+and one in <i>six</i> African-American men,
+are behind bars, on parole, or on probation.
+</p>
+
+<p>
+But these numbers hide things &mdash;
+the individual <b>stories</b>,
+the underlying <b>systems</b>.
+So, using actual statistics on age, education, income, etc...
+here’s a simulation that connects <i>all</i> these factors,
+and brings the data to <i>life:</i>
+</p>
+
+<p>
+<div class="button" onclick="Sim.config.stats.sim_start = {value:true}; Sim.update();">
+START THE SIMULATION
+</div>
+</p>
+
+<p>
+Every “person” in this simulation has their own story.
+The triumphant story of a man who gets out of prison, turns a new leaf, and makes an honest living.
+The tragic story of a kid who struggles in school, winds up in bad company, and ends up in jail.
+And so on.
+</p>
+
+<p style="text-align:right; font-size:30px">
+click on a person to focus on their life story &rarr;
+</p>
+
+<p>
+<!-- 
+Actually, core: IT'S THE SYSTEM STUPID.
+Expect failure: injustice is not the cause, BUT THE RESULT.
+Let's get inside the system, and change the system.
+Bipartisan efforts.
+-->
+Mass incarceration is one of our country's messiest messes, but it can be solved!
+By showing you the statistics <i>and</i> systems <i>and</i> stories,
+hopefully,
+you'll get a better picture of the entire problem,
+and what can be done.
+</p>
+
+<p>
+<br>
+<br>
+</p>
+
+<!-- INSIDE THE SYSTEM -->
+
+<h2>
+This Is A Map
+</h2>
+
+<p class="edit_container" color="#227daa">
+
+	For each year I'm in high school, I have...
+	<edit stat="high_school_dropout"
+		  label="a {% chance} of dropping out">
+	</edit>
+	<edit stat="high_school_convicted"
+		  label="and a {% chance} of being arrested.">
+	</edit>
+
+	<br>
+	And if I graduate, I've got...
+	<edit stat="high_school_to_college"
+		  label="a {% chance} of going to college">
+	</edit>
+	<edit stat="high_school_to_job"
+		  label="otherwise, {% chance} I get a job immediately.">
+	</edit>
+</p>
+
+<p class="edit_container" color="#1da0e2">
+
+	For each year I'm in college, I have...
+	<edit stat="college_dropout"
+		  label="a {% chance} of dropping out">
+	</edit>
+	<edit stat="college_convicted"
+		  label="and a {% chance} of being arrested.">
+	</edit>
+
+	<br>
+	And if I graduate, I've got...
+	<edit stat="college_to_job"
+		  label="a {% chance} of getting a job right away.">
+	</edit>
+
+</p>
+
+<p class="edit_container" color="#88aa22">
+
+	While I'm unemployed, every year I have...
+	<edit stat="unemployed_gets_employed"
+		  label="a {% chance} of getting a job">
+	</edit>
+	<edit stat="unemployed_gets_convicted"
+		  label="and a {% chance} of being arrested.">
+	</edit>
+
+	<br>
+	But if I'm an <i>ex-convict</i>, each year I have...
+	<edit stat="excon_gets_employed"
+		  label="a {% chance} of getting a job">
+	</edit>
+	<edit stat="excon_gets_convicted"
+		  label="and a {% chance} of going back to prison.">
+	</edit>
+
+</p>
+
+<p class="edit_container" color="#b1e21d">
+
+	While I'm employed, each year I have...
+	<edit stat="laid_off"
+		  label="a {% chance} of getting laid off">
+	</edit>
+	<edit stat="employed_convicted"
+		  label="and a {% chance} of getting arrested.">
+	</edit>
+
+</p>
+
+<p class="edit_container" color="#000">
+
+	If I go to prison...
+	<edit stat="prison_sentence"
+		  label="I'll get a { year sentence.}">
+	</edit>
+
+</p>
+
+<!--
+COMBINING THOSE TWO SECTIONS
+-->
+
+<p>
+- this simulation is a map
+<br>
+- use own data, challenge my assumptions, What If?
+<br>
+- school stats
+<br>
+- employment stats
+<br>
+- prison/crime stats
+<br>
+- other policies
+</p>
+
+<p>
+- silver bullet?
+<br>
+- evaluate and make your own policies
+<br>
+- share your own with a link
+<br>
+- no silver bullet, and that's a good thing.
+</p>
+
+<p>
+<br>
+<br>
+</p>
+
+
+<!-- CHANGING THE SYSTEM -->
+
+<h2>
+And So On
+</h2>
+
+<p>
+- limitations
+<br>
+- extending the code
+<br>
+- no silver bullet, we can ALL do it! local efforts?
+<br>
+- some final words on mass incarceration
+</p>
+
+<p>
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah
+</p>
+
+<p>
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah
+</p>
+
+<p>
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah
+</p>
+
+<p>
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah 
+blah blah blah blah blah blah
+</p>
+
+
+		</div>
+	</div>
+
+	<div id="footer">
+	</div>
+
+</body>
+</html>
+
+<!-- External Libraries -->
+<script src="scripts/lib/snap.svg-min.js"></script>
+<script src="scripts/lib/stats.min.js"></script>
+
+<!-- Our Engine Code -->
+<script src="scripts/core/Person.js"></script>
+<script src="scripts/core/Stage.js"></script>
+<script src="scripts/core/Focus.js"></script>
+<!--script src="scripts/core/Slider.js"></script-->
+<script src="scripts/core/Stats.js"></script>
+<script src="scripts/core/Sim.js"></script>
+
+<!-- Main Script -->
+<script src="scripts/main.js"></script>

@@ -21,25 +21,21 @@
 <!-- INTRODUCTION -->
 	
 <h2>
-[untitled sim]
+Incarceration Sim
 </h2>
+<div style="font-size:25px; text-align:right; position:relative; top:-15px;">[a very early prototype]</div>
 
 <p>
-You’ve probably heard the statistics a bajillion times.
-The United States has 5% of the world’s population, but 25% of the world’s prisoners.
-Our entire corrections system costs taxpayers $74,000,000,000 a year.
-One in 35 American adults,
-and one in <i>six</i> African-American men,
-are behind bars, on parole, or on probation.
+The United States has 5% of the world's population,
+but 25% of the world's prisoners.
+That's, uh, kind of embarassing.
 </p>
 
 <p>
-But these numbers hide things &mdash;
-the individual <b>stories</b>,
-the underlying <b>systems</b>.
-So, using actual statistics on age, education, income, etc...
-here’s a simulation that connects <i>all</i> these factors,
-and brings the data to <i>life:</i>
+But it's hard to see the full context of such a huge systemic problem.
+So, I've taken the national statistics on
+age, race, education, income, crime, etc...
+and made a simulation that <i>connects</i> all these factors together:
 </p>
 
 <p>
@@ -49,46 +45,61 @@ START THE SIMULATION
 </p>
 
 <p>
-Every “person” in this simulation has their own story.
-The triumphant story of a man who gets out of prison, turns a new leaf, and makes an honest living.
-The tragic story of a kid who struggles in school, winds up in bad company, and ends up in jail.
-And so on.
+Every "person" in this simulation
+has their own life journey,
+from birth to death,
+and this simulation gives us 
+100 stories-per-minute.
 </p>
 
 <p style="text-align:right; font-size:30px">
-click on a person to focus on their life story &rarr;
+click a person to focus on their story &rarr;
 </p>
 
 <p>
-<!-- 
-Actually, core: IT'S THE SYSTEM STUPID.
-Expect failure: injustice is not the cause, BUT THE RESULT.
-Let's get inside the system, and change the system.
-Bipartisan efforts.
--->
-Mass incarceration is one of our country's messiest messes, but it can be solved!
-By showing you the statistics <i>and</i> systems <i>and</i> stories,
-hopefully,
-you'll get a better picture of the entire problem,
-and what can be done.
+By combining <b>systems, stories &amp; statistics</b>,
+maybe we can get a better idea on how to solve our mass incarceration problem!
+This simulation will show us that 
+&mdash;
+contrary to what many of us activists believe
+&mdash;
+injustice is not the <i>cause</i> of a bad system,
+it's the <i>result</i>.
 </p>
 
 <p>
-<br>
-<br>
+<br><br>
 </p>
 
-<!-- INSIDE THE SYSTEM -->
 
+<!-- INTRODUCTION -->
+	
 <h2>
-This Is A Map
+Inside The System
 </h2>
+
+<p>
+The people in this sim, and their lives,
+are based off <b>the real national statistics
+for low-income boys &amp; men.</b>
+(other demographics get caught up in the incarceration system
+too, of course, but this group is the most at-risk)
+</p>
+
+<p>
+So, here are those stats, with sources attached!
+You can modify the numbers, too &mdash;
+to challenge my assumptions,
+to use local data instead of national data,
+to evaluate possible solutions,
+or even to <i>create your own policies</i>.
+</p>
 
 <p class="edit_container" color="#227daa">
 
 	For each year I'm in high school, I have...
 	<edit stat="high_school_dropout"
-		  label="a {% chance} of dropping out">
+		  label="a {% chance} of dropping out,">
 	</edit>
 	<edit stat="high_school_convicted"
 		  label="and a {% chance} of being arrested.">
@@ -97,7 +108,7 @@ This Is A Map
 	<br>
 	And if I graduate, I've got...
 	<edit stat="high_school_to_college"
-		  label="a {% chance} of going to college">
+		  label="a {% chance} of going to college,">
 	</edit>
 	<edit stat="high_school_to_job"
 		  label="otherwise, {% chance} I get a job immediately.">
@@ -108,7 +119,7 @@ This Is A Map
 
 	For each year I'm in college, I have...
 	<edit stat="college_dropout"
-		  label="a {% chance} of dropping out">
+		  label="a {% chance} of dropping out,">
 	</edit>
 	<edit stat="college_convicted"
 		  label="and a {% chance} of being arrested.">
@@ -126,7 +137,7 @@ This Is A Map
 
 	While I'm unemployed, every year I have...
 	<edit stat="unemployed_gets_employed"
-		  label="a {% chance} of getting a job">
+		  label="a {% chance} of getting a job,">
 	</edit>
 	<edit stat="unemployed_gets_convicted"
 		  label="and a {% chance} of being arrested.">
@@ -135,7 +146,7 @@ This Is A Map
 	<br>
 	But if I'm an <i>ex-convict</i>, each year I have...
 	<edit stat="excon_gets_employed"
-		  label="a {% chance} of getting a job">
+		  label="a {% chance} of getting a job,">
 	</edit>
 	<edit stat="excon_gets_convicted"
 		  label="and a {% chance} of going back to prison.">
@@ -147,7 +158,7 @@ This Is A Map
 
 	While I'm employed, each year I have...
 	<edit stat="laid_off"
-		  label="a {% chance} of getting laid off">
+		  label="a {% chance} of getting laid off,">
 	</edit>
 	<edit stat="employed_convicted"
 		  label="and a {% chance} of getting arrested.">
@@ -164,97 +175,72 @@ This Is A Map
 
 </p>
 
-<!--
-COMBINING THOSE TWO SECTIONS
--->
-
 <p>
-- this simulation is a map
-<br>
-- use own data, challenge my assumptions, What If?
-<br>
-- school stats
-<br>
-- employment stats
-<br>
-- prison/crime stats
-<br>
-- other policies
+In tackling mass incarceration, or any big systemic problem,
+there is no silver bullet &mdash; and that's a good thing.
+That means, there are many, <i>many</i> ways to help,
+not just directly within policy or prisons,
+but also schools, businesses, and local communities.
 </p>
 
 <p>
-- silver bullet?
-<br>
-- evaluate and make your own policies
-<br>
-- share your own with a link
-<br>
-- no silver bullet, and that's a good thing.
+We're <i>all</i> part of the system, for better or worse.
 </p>
 
 <p>
-<br>
-<br>
+<br><br>
 </p>
 
 
-<!-- CHANGING THE SYSTEM -->
-
+<!-- INTRODUCTION -->
+	
 <h2>
-And So On
+What D'ya Think?
 </h2>
 
 <p>
-- limitations
-<br>
-- extending the code
-<br>
-- no silver bullet, we can ALL do it! local efforts?
-<br>
-- some final words on mass incarceration
+The simulation and words and everything are super rough,
+but I just wanted to run a first draft by you!
+Later, I'll also add:
 </p>
 
 <p>
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah
+<ul style="padding-left: 20px;">
+<li>
+	Graphs of the simulation's crime rates, unemployment rates, incarceration rates, etc.
+</li>
+<li>
+	A way to see how your policy changes affected the system,
+	compared to the "default" settings.
+</li>
+<li>
+	A way to <i>share</i> your own policy changes through a web link.
+</li>
+</ul>
 </p>
 
 <p>
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah
+What else do you think this interactive is missing?
+Or, what do you think I should change, or cut out completely?
+What aspects did you like most, which ones did you like least,
+and why?
 </p>
 
 <p>
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah
+I don't just want people to "learn" about the topic,
+I want people to be able to actually <i>use</i> this thing:
+to evaluate/design policies,
+to use their own city's data,
+to figure out what one can <i>personally</i> do to change the system.
 </p>
 
 <p>
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah
+So yeah, whatever feedback you gots will help a mega-tonne.
+Thank you so much! :)
 </p>
 
 
 		</div>
-	</div>
-
-	<div id="footer">
 	</div>
 
 </body>
