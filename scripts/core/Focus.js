@@ -16,7 +16,10 @@
 
 		// The whole graphics
 		Focus.graphics = svg.group(Focus.shade);
-		Focus.graphics.attr({display:"none"});
+		Focus.graphics.attr({
+			cursor: "pointer",
+			display:"none"
+		});
 
 		// When you click that element, tho...
 		Focus.graphics.mousedown(Focus.removeFocus);

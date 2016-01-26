@@ -107,6 +107,9 @@ function Person(stageID){
 
 	// Focus Shtuff
 	self.isFocus = false;
+	self.graphics.attr({
+		cursor: "pointer"
+	});
 	self.graphics.mousedown(function(){
 		Focus.setFocus(self);
 	});

@@ -335,7 +335,7 @@ Sim.init({
 
 			// Actually, unless we haven't started yet...
 			if(!STATS("sim_start")){
-				person.age = STATS("age_for_school")-1;
+				person.age = Math.floor(Math.random()*STATS("age_for_school"));
 			}
 
 		},
