@@ -191,7 +191,7 @@ Sim.init({
 
 				// Sentence decreases til you're out
 				person.yearsInPrisonLeft--;
-				if(person.yearsInPrisonLeft==0){
+				if(person.yearsInPrisonLeft<=0){
 					return person.goto("unemployed");
 				}
 
@@ -206,6 +206,9 @@ Sim.init({
 	*********/
 	stats:{
 
+		// Meta
+		"sim_start":{ value:false },
+
 		// Some un-editable constants
 		"age_for_school":{ value:6 },
 		"age_for_death":{ value:78 },
@@ -214,27 +217,34 @@ Sim.init({
 
 		// Grade/High School Stats
 		"high_school_dropout":{ // per year
-			value: 0.10
+			//value: 0.10
+			value: 0.00
 		},
 		"high_school_convicted":{ // per year
-			value: 0.02
+			//value: 0.02
+			value: 0.00
 		},
 		"high_school_to_college":{ // on graduation
-			value: 0.3
+			//value: 0.3
+			value: 1.00
 		},
 		"high_school_to_job":{ // on graduation
-			value: 0.3
+			//value: 0.3
+			value: 0.30
 		},
 
 		// College Stats
 		"college_dropout":{ // per year
-			value: 0.10
+			//value: 0.10
+			value: 0.00
 		},
 		"college_convicted":{ // per year
-			value: 0.02
+			//value: 0.02
+			value: 0.00
 		},
 		"college_to_job":{ // on graduation
-			value: 0.9
+			//value: 0.9
+			value: 1.00
 		},
 
 		// Unemployed Stats (all Per Year)
@@ -274,24 +284,38 @@ Sim.init({
 	controls people's births & deaths.
 	*********/
 	observer:{
+		welcome: function(people){
+			// Start with three peeps.
+			for(var i=0;i<3;i++) Sim.newPerson("born");
+		},
 		action: function(people){
 
-			// For every person...
-			for(var i=0;i<people.length;i++){
-				var person = people[i];
+			// If the sim's started...
+			if(STATS("sim_start")){
 
-				// Age them all by one year
-				person.age++;
+				// For every person...
+				for(var i=0;i<people.length;i++){
+					var person = people[i];
 
-				// If too old, kill 'em off
-				if(person.age > STATS("age_for_death")){
-					person.kill();
+					// Age them all by one year
+					person.age++;
+
+					// If too old, kill 'em off
+					if(person.age > STATS("age_for_death")){
+						person.kill();
+					}
+
 				}
 
-			}
+				// Every year, a new person is born (added to the "born" stage)
+				Sim.newPerson("born");
 
-			// Every year, a new person is born (added to the "born" stage)
-			Sim.newPerson("born");
+			}else{
+				// Otherwise, add a newbie every whenever.
+				if(Math.random()<0.1){
+					Sim.newPerson("born");
+				}
+			}
 
 		}
 	},
@@ -308,6 +332,11 @@ Sim.init({
 			person.age = 0;
 			person.education = 0;
 			person.convictions = 0;
+
+			// Actually, unless we haven't started yet...
+			if(!STATS("sim_start")){
+				person.age = STATS("age_for_school")-1;
+			}
 
 		},
 		drawInitialize: function(person){

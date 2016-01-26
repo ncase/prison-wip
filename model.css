@@ -2,9 +2,12 @@ body{
 	margin:0;
 
 	font-family: Helvetica, Arial, sans-serif;
-	font-size: 21px;
+	font-size: 19px;
 	font-weight: 100;
 
+}
+b{
+	font-weight: bold;
 }
 h2{
 	font-size: 48px;
@@ -14,6 +17,16 @@ h2{
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     font-weight: 100;
+    line-height: 1em;
+}
+
+/*****************
+CONTENT
+*****************/
+#content{
+	position: relative;
+    margin: 0 auto;
+    width: 1080px;
 }
 #model{
 	width:640px;
@@ -36,11 +49,52 @@ h2{
 	padding-right: 40px;
 	padding-top: 50px;
 	padding-bottom: 50px;
-	position: absolute;
-	right: calc(50% + 100px);
+	/*position: absolute;
+	right: calc(50% + 100px);*/
 
 	text-align: justify;
+	line-height: 1.5em;
 }
+
+/*****************
+BUTTONS
+*****************/
+.button{
+	font-size:30px;
+	color: #227daa;
+	cursor: pointer;
+	font-weight: bold;
+	padding:10px;
+	padding-top: 13px;
+	border-radius: 10px;
+	border: 3px solid #227daa;
+	text-align: center;
+
+    -webkit-transition: all 0.1s;
+    -moz-transition: all 0.1s;
+    -o-transition: all 0.1s;
+    transition: all 0.1s;
+
+}
+.button:hover{
+	color: #1da0e2;
+	border-color: #1da0e2;
+}
+
+
+/*****************
+FOOTER
+*****************/
+#footer{
+	position: relative;
+	width:100%;
+	height: 100%;
+	background: #222;
+}
+
+/*****************
+PARAMETER UI
+*****************/
 .slider{
 	text-align: left;
 	font-size: 16px;

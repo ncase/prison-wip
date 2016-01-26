@@ -21,7 +21,7 @@ function Person(stageID){
 	// Kill
 	self.kill = function(){
 		self.dead = true;
-		self.graphics.animate( {opacity:0}, Sim.ANIM_SPEED, mina.easeinout, function(){
+		self.graphics.animate( {opacity:0}, Sim.ANIM_SPEED, mina.linear, function(){
 			self.REMOVE_ME_PLZ = true;
 			self.graphics.remove();
 			if(Focus.person==self){

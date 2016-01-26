@@ -29,6 +29,9 @@ Sim.init = function(config){
 	// Focus
 	Focus.init();
 
+	// Observer start
+	Sim.config.observer.welcome();
+
 	// Start the update loop
 	setInterval(Sim.update, Sim.STEP_SPEED);
 
