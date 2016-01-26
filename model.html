@@ -85,24 +85,89 @@ This Is A Map
 </h2>
 
 <p class="edit_container" color="#227daa">
-While I'm in high school, I have...
-<edit stat="high_school_dropout"
-	  label="a {value} chance of dropping out">
-</edit>
-<edit stat="high_school_convicted"
-	  label="and a {value} chance of being arrested.">
-</edit>
-And if I graduate, I've got...
-<edit stat="high_school_to_college"
-	  label="a {value} chance going to college.">
-</edit>
+
+	For each year I'm in high school, I have...
+	<edit stat="high_school_dropout"
+		  label="a {% chance} of dropping out">
+	</edit>
+	<edit stat="high_school_convicted"
+		  label="and a {% chance} of being arrested.">
+	</edit>
+
+	<br>
+	And if I graduate, I've got...
+	<edit stat="high_school_to_college"
+		  label="a {% chance} of going to college">
+	</edit>
+	<edit stat="high_school_to_job"
+		  label="otherwise, {% chance} I get a job immediately.">
+	</edit>
+</p>
+
+<p class="edit_container" color="#1da0e2">
+
+	For each year I'm in college, I have...
+	<edit stat="college_dropout"
+		  label="a {% chance} of dropping out">
+	</edit>
+	<edit stat="college_convicted"
+		  label="and a {% chance} of being arrested.">
+	</edit>
+
+	<br>
+	And if I graduate, I've got...
+	<edit stat="college_to_job"
+		  label="a {% chance} of getting a job right away.">
+	</edit>
+
+</p>
+
+<p class="edit_container" color="#88aa22">
+
+	While I'm unemployed, every year I have...
+	<edit stat="unemployed_gets_employed"
+		  label="a {% chance} of getting a job">
+	</edit>
+	<edit stat="unemployed_gets_convicted"
+		  label="and a {% chance} of being arrested.">
+	</edit>
+
+	<br>
+	But if I'm an <i>ex-convict</i>, each year I have...
+	<edit stat="excon_gets_employed"
+		  label="a {% chance} of getting a job">
+	</edit>
+	<edit stat="excon_gets_convicted"
+		  label="and a {% chance} of going back to prison.">
+	</edit>
+
+</p>
+
+<p class="edit_container" color="#b1e21d">
+
+	While I'm employed, each year I have...
+	<edit stat="laid_off"
+		  label="a {% chance} of getting laid off">
+	</edit>
+	<edit stat="employed_convicted"
+		  label="and a {% chance} of getting arrested.">
+	</edit>
+
+</p>
+
+<p class="edit_container" color="#000">
+
+	If I go to prison...
+	<edit stat="prison_sentence"
+		  label="I'll get a { year sentence.}">
+	</edit>
+
 </p>
 
 <!--
 COMBINING THOSE TWO SECTIONS
 -->
 
-<!--
 <p>
 - this simulation is a map
 <br>
@@ -125,43 +190,6 @@ COMBINING THOSE TWO SECTIONS
 - share your own with a link
 <br>
 - no silver bullet, and that's a good thing.
-</p>
--->
-
-<p>
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah
-</p>
-
-<p>
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah
-</p>
-
-<p>
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah
-</p>
-
-<p>
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah 
-blah blah blah blah blah blah
 </p>
 
 <p>

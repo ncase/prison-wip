@@ -40,25 +40,55 @@ var Editor = function(config){
 	var self = this;
 	
 	// The property we're editing
-	self.propertyObject = Sim.config.stats[config.getAttribute("stat")];
+	var statConfig = config.getAttribute("stat");
+	self.propertyObject = Sim.config.stats[statConfig];
 	self.propertyName = "value";
+
+	// What kind of editor?
+	switch(self.propertyObject.type){
+		case "percent": case "integer":
+			EditorSlider(self,config);
+			break;
+	}
+
+	// REPLACE DOM WHERE IT IS...
+	config.parentNode.replaceChild(self.dom,config);
+
+};
+
+var EditorSlider = function(self,config){
 
 	// Create DOM
 	var dom = document.createElement("div");
 	dom.setAttribute("class","edit_slider");
+	self.dom = dom;
 
 	// Create text
+	var labelConfig = config.getAttribute("label");
 	var label = document.createElement("div");
-	label.innerHTML = config.getAttribute("label").replace("{value}","<span></span>");
+	label.innerHTML = labelConfig.replace(/\{.*\}/,"<span></span>");
 	dom.appendChild(label);
 	self.label = label;
+
+	// What's min, max, and step?
+	var type = self.propertyObject.type;
+	var min,max,step;
+	if(type=="percent"){
+		min=0;
+		max=1;
+		step=0.01;
+	}else if(type=="integer"){
+		min=self.propertyObject.min;
+		max=self.propertyObject.max;
+		step=1;
+	}
 
 	// Create input slider
 	var input = document.createElement("input");
 	input.setAttribute("type", "range");
-	input.setAttribute("min",0);
-	input.setAttribute("max",1);
-	input.setAttribute("step",0.01);
+	input.setAttribute("min",min);
+	input.setAttribute("max",max);
+	input.setAttribute("step",step);
 	dom.appendChild(input);
 	self.input = input;
 
@@ -66,20 +96,30 @@ var Editor = function(config){
 	input.value = self.propertyObject[self.propertyName];
 
 	// Update Label
+	var labelSuffix = labelConfig.match(/\{(.*)\}/)[1];
 	var span = label.querySelector("span");
-	span.innerHTML = Math.round(parseFloat(input.value)*100)+"%";
 	span.style.color = config.parentNode.getAttribute("color");
 	self.span = span;
 
-	// On Input, edit the property
-	input.oninput = function(){
-		var hundred = Math.round(parseFloat(self.input.value)*100);
-		self.span.innerHTML = hundred+"%";
-		self.propertyObject[self.propertyName] = hundred/100;
-	};
+	// What function, depending on the type
+	var oninput;
+	if(self.propertyObject.type=="percent"){
+		oninput = function(){
+			var hundred = Math.round(parseFloat(self.input.value)*100);
+			self.span.innerHTML = hundred+labelSuffix;
+			self.propertyObject[self.propertyName] = hundred/100;
+		};
+	}else if(self.propertyObject.type=="integer"){
+		oninput = function(){
+			var value = parseInt(self.input.value);
+			self.span.innerHTML = value+labelSuffix;
+			self.propertyObject[self.propertyName] = value;
+		};
+	}
 
-	// REPLACE DOM WHERE IT IS...
-	config.parentNode.replaceChild(dom,config);
+	// Execute it once
+	oninput();
+	input.oninput = oninput;
 
 };
 

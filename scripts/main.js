@@ -279,7 +279,7 @@ Sim.init({
 
 		// Prison Stats (all upon entering)
 		"prison_sentence":{
-			type: "number",
+			type: "integer",
 			min:1, max:50,
 			value: 10
 		}
