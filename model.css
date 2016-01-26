@@ -95,14 +95,18 @@ FOOTER
 /*****************
 PARAMETER UI
 *****************/
-.slider{
+.edit_container{
+    padding: 10px;
+    border-left: 5px solid #000;
+}
+.edit_slider{
 	text-align: left;
 	font-size: 16px;
 	margin: 5px 0;
 }
-.slider input{
-	width:100%;
+.edit_slider > div{
+	height:1.5em;
 }
-.slider span{
-	color:#cc2727;
+.edit_slider > input{
+	width:100%;
 }

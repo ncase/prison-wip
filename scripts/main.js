@@ -217,47 +217,51 @@ Sim.init({
 
 		// Grade/High School Stats
 		"high_school_dropout":{ // per year
-			//value: 0.10
-			value: 0.00
+			type: "percent",
+			value: 0.10
 		},
 		"high_school_convicted":{ // per year
-			//value: 0.02
-			value: 0.00
+			type: "percent",
+			value: 0.02
 		},
 		"high_school_to_college":{ // on graduation
-			//value: 0.3
-			value: 1.00
+			type: "percent",
+			value: 0.3
 		},
 		"high_school_to_job":{ // on graduation
-			//value: 0.3
-			value: 0.30
+			type: "percent",
+			value: 0.3
 		},
 
 		// College Stats
 		"college_dropout":{ // per year
-			//value: 0.10
-			value: 0.00
+			type: "percent",
+			value: 0.10
 		},
 		"college_convicted":{ // per year
-			//value: 0.02
-			value: 0.00
+			type: "percent",
+			value: 0.02
 		},
 		"college_to_job":{ // on graduation
-			//value: 0.9
-			value: 1.00
+			type: "percent",
+			value: 0.9
 		},
 
 		// Unemployed Stats (all Per Year)
 		"unemployed_gets_employed":{
+			type: "percent",
 			value: 0.30
 		},
 		"unemployed_gets_convicted":{
+			type: "percent",
 			value: 0.10
 		},
 		"excon_gets_employed":{
+			type: "percent",
 			value: 0.05
 		},
 		"excon_gets_convicted":{
+			type: "percent",
 			value: 0.50
 		},
 
@@ -265,14 +269,18 @@ Sim.init({
 		// WHAT ABOUT SOCIAL MOBILITY??? //
 		// and GETTING OUTTA THIS SYSTEM //
 		"employed_convicted":{
+			type: "percent",
 			value: 0.05
 		},
 		"laid_off":{
+			type: "percent",
 			value: 0.20
 		},
 
 		// Prison Stats (all upon entering)
 		"prison_sentence":{
+			type: "number",
+			min:1, max:50,
 			value: 10
 		}
 
