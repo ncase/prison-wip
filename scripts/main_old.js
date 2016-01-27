@@ -44,9 +44,9 @@ Sim.init({
 				}
 
 				// Chance you'll get convicted
-				if(CHANCE("high_school_convicted")){
+				/*if(CHANCE("high_school_convicted")){
 					return person.goto("prison");
-				}
+				}*/
 
 				// Get educated on.
 				person.education++;
@@ -83,9 +83,9 @@ Sim.init({
 				}
 
 				// Chance you'll get convicted
-				if(CHANCE("college_convicted")){
+				/*if(CHANCE("college_convicted")){
 					return person.goto("prison");
-				}
+				}*/
 
 				// Get educated on.
 				person.education++;
@@ -144,7 +144,7 @@ Sim.init({
 				////////////////
 
 				// Base rate
-				var chance_i_get_convicted = STATS("unemployed_gets_convicted");
+				/*var chance_i_get_convicted = STATS("unemployed_gets_convicted");
 				
 				// Am I an excon?
 				if(person.convictions>0){
@@ -154,7 +154,7 @@ Sim.init({
 				// Apply
 				if(Math.random() < chance_i_get_convicted){
 					return person.goto("prison");
-				}
+				}*/
 
 			}
 		},
@@ -174,9 +174,9 @@ Sim.init({
 			during: function(person){
 
 				// Chance you go to prison
-				if(CHANCE("employed_convicted")){
+				/*if(CHANCE("employed_convicted")){
 					return person.goto("prison");
-				}
+				}*/
 
 				// Chance you get laid off
 				if(CHANCE("laid_off")){
@@ -228,7 +228,8 @@ Sim.init({
 
 		// Some un-editable constants
 		"age_for_school":{ value:13 },
-		"age_for_death":{ value:79 }, // average lifespan for US
+		//"age_for_death":{ value:79 }, // average lifespan for US
+		"age_for_death":{ value:40 }, // average lifespan for US
 		"edu_for_high_school_cert":{ value:4 }, // 4 years in high school
 		"edu_for_college_cert":{ value:8 }, // plus 4 years for college
 
@@ -319,10 +320,10 @@ Sim.init({
 
 		// Bureau of Justice Statistics (.gov)
 		// http://www.bjs.gov/content/pub/pdf/rprts05p0510.pdf
-		// The recidivism rate in the first year after release is 30.4%, crikey.
+		// The recidivism rate in the first year after release is 57%, crikey.
 		"excon_gets_convicted":{
 			type: "percent",
-			value: 0.30
+			value: 0.57
 		},
 
 		// Bureau of Labor Statistics
@@ -345,16 +346,19 @@ Sim.init({
 		// Per age
 		// Probability of each type of crime...
 
-		// ??? ABSOLUTELY GUESSING
+		// ??? 
+		// Employed Stats (all Per Year)
+		// what IS the crime rate of those employed?
 		"employed_convicted":{
 			type: "percent",
-			value: 0.01
+			value: 0.05
 		},
 
-		// ??? ABSOLUTELY GUESSING
+		// ???
+		// Depends on age.
 		"unemployed_gets_convicted":{
 			type: "percent",
-			value: 0.07
+			value: 0.10
 		},
 
 		///////////////////////////
@@ -401,12 +405,83 @@ Sim.init({
 					continue;
 				}
 
+				// CRIME BY AGE (for men)
+				/***
+				12-: virtually none
+				13 to 17: 3%
+				18 to 21: 4%
+				22 to 29: 2%
+				30 to 49: 1%
+				50+: virtually none
+				***/
+				var chance = 0;
+				if(person.age<13){
+					// no crime
+				}else if(person.age<18){
+					// adolescent crime
+					chance = 0.03;
+				}else if(person.age<22){
+					// young adult crime
+					chance = 0.04;
+				}else if(person.age<30){
+					// adult crime
+					chance = 0.02;
+				}else if(person.age<50){
+					// adult crime
+					chance = 0.01;
+				}else{
+					// too old for this crap
+				}
+
+				// RECIDIVISM (in Unemployed & Employed stages)
+				if(person.stageID=="unemployed" || person.stageID=="employed"){
+					if(person.convictions>0){
+
+						// Time since last release, if ever convicted
+						if(person.yearsSinceLastRelease>=0){
+							person.yearsSinceLastRelease++;
+						}
+
+						/****
+
+						!!! ACTUALLY.
+						30.4% 43.3% 49.7% 52.9% 55.1%
+
+						CUMULATIVE
+						1 year	2 years	3 years	4 years	5 years
+						23.0%	36.3%	45.2%	51.3%	55.4%
+
+						NON-CUMULATIVE, PROBABLY
+						23.0%	13.3%	8.9%	6.1%	4.1%
+
+						***/
+						// Chance diminishes over years...
+						if(person.yearsSinceLastRelease==1){
+							chance += 0.23;
+						}else if(person.yearsSinceLastRelease==2){
+							chance += 0.13;
+						}else if(person.yearsSinceLastRelease==3){
+							chance += 0.09;
+						}else if(person.yearsSinceLastRelease==4){
+							chance += 0.06;
+						}else if(person.yearsSinceLastRelease==5){
+							chance += 0.04;
+						}
+
+					}
+				}
+
+				// DAT CHANCE
+				if(Math.random()<chance){
+					person.goto("prison");
+					continue;
+				}
+
 			}
 
-			// Every year, new people are created
+			// Every year, two new people are created
 			// (add more for lower variance...)
-			//for(var i=0;i<2;i++) Sim.newPerson("born");
-			Sim.newPerson("born");
+			for(var i=0;i<2;i++) Sim.newPerson("born");
 
 		}
 	},
@@ -487,12 +562,7 @@ Sim.init({
 					});
 
 				// Some college
-				/*}else if(person.education > STATS("edu_for_high_school_cert")){
-
-					person.degree.attr({
-						fill:"#FFEB77",
-						stroke:"#BBA933"
-					});*/
+				//}else if(person.education > STATS("edu_for_high_school_cert")){
 
 				// Just high school
 				}else{

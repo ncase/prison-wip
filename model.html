@@ -59,9 +59,6 @@ click a person to focus on their story &rarr;
 By combining <b>systems, stories &amp; statistics</b>,
 maybe we can get a better idea on how to solve our mass incarceration problem!
 This simulation will show us that 
-&mdash;
-contrary to what many of us believe
-&mdash;
 injustice is not the <i>cause</i> of a bad system,
 it's the <i>result</i>.
 </p>
@@ -94,6 +91,12 @@ to evaluate possible solutions,
 or even to <i>create your own policies</i>.
 </p>
 
+<p>
+<b>TO-DO:</b><br>
+* stats for age, race, nonviolent crime<br>
+* link sources (mostly BJS.gov &amp; NCES.gov)
+</p>
+
 <p class="edit_container" color="#227daa">
 
 	For each year I'm in high school, I have...
@@ -101,7 +104,7 @@ or even to <i>create your own policies</i>.
 		  label="a {% chance} of dropping out,">
 	</edit>
 	<edit stat="high_school_convicted"
-		  label="and a {% chance} of being convicted.">
+		  label="and a {% chance} of being incarcerated.">
 	</edit>
 
 	<br>
@@ -119,14 +122,14 @@ or even to <i>create your own policies</i>.
 		  label="a {% chance} of dropping out,">
 	</edit>
 	<edit stat="college_convicted"
-		  label="and a {% chance} of being convicted.">
+		  label="and a {% chance} of being incarcerated.">
 	</edit>
 
 </p>
 
 <p class="edit_container" color="#88aa22">
 
-	My chances of getting a job depend on my level of education...
+	My chances of getting a job depend on my level of education:
 	<edit stat="employment_degree_none"
 		  label="{% employment} with less than high school">
 	</edit>
@@ -143,17 +146,17 @@ or even to <i>create your own policies</i>.
 	<br>
 	However, if I'm an ex-felon...
 	<edit stat="excon_factor_employed"
-		  label="that cuts my relative chances by {%.}">
+		  label="that cuts my chances of employment by {%.}">
 	</edit>
-	
+
 	<br>
-	Also, each year I have...
+	Also, for each year I'm unemployed...
 	<edit stat="unemployed_gets_convicted"
-		  label="a {% chance} of getting convicted,">
+		  label="I have a {% chance} of being incarcerated,">
 	</edit>
-	but if I'm an ex-felon, I have...
+	but if I'm an ex-felon,
 	<edit stat="excon_gets_convicted"
-		  label="a {% chance} of going back to prison.">
+		  label="it's a {% chance} of going back to prison.">
 	</edit>
 
 </p>
@@ -165,7 +168,7 @@ or even to <i>create your own policies</i>.
 		  label="a {% chance} of getting laid off,">
 	</edit>
 	<edit stat="employed_convicted"
-		  label="and a {% chance} of getting convicted.">
+		  label="and a {% chance} of getting incarcerated.">
 	</edit>
 
 </p>
@@ -176,6 +179,18 @@ or even to <i>create your own policies</i>.
 	<edit stat="prison_sentence"
 		  label="I'll get a { year sentence.}">
 	</edit>
+
+	<!--br>
+	And when/if I get out, my chances of landing back in prison are...
+	<edit stat="prison_sentence"
+		  label="{%} for my first year after release">
+	</edit>
+	<edit stat="prison_sentence"
+		  label="{%} for my second year after release">
+	</edit>
+	<edit stat="prison_sentence"
+		  label="{%} for my third year after release">
+	</edit-->
 
 </p>
 
@@ -203,32 +218,15 @@ What D'ya Think?
 </h2>
 
 <p>
-The simulation and words and everything are super rough,
+Everything here is super rough,
 but I just wanted to run a first draft by you!
-Later, I'll also add:
 </p>
 
 <p>
-<ul style="padding-left: 20px;">
-<li>
-	Graphs of the simulation's crime rates, unemployment rates, incarceration rates, etc
-	over time.
-</li>
-<li>
-	A way to see how your policy changes affected the system,
-	compared to the "default" settings.
-</li>
-<li>
-	A way to <i>share</i> your own policy changes through a web link.
-</li>
-</ul>
-</p>
-
-<p>
-What else do you think this interactive is missing?
-Or, what do you think I should change, or cut out completely?
-What do you think about the UI design?
-What aspects did you like most about this, or least about this, and why?
+What did you think about it?
+What's missing, what should be taken out?
+What did you like most, what did you like least?
+And why?
 </p>
 
 <p>
@@ -269,18 +267,33 @@ Thank you so much! :)
 <!-- HACK -->
 <script>
 
-window.percentInPrison = function(){
+window.percentIn = function(stageID){
 
 	var prisonCount = 0;
 	for(var i=0;i<Sim.people.length;i++){
 		var person = Sim.people[i];
-		if(person.stageID=="prison"){
+		if(person.stageID==stageID){
 			prisonCount++;
 		}
 	}
 
 	var percent = Math.round((prisonCount/Sim.people.length)*100);
-	console.log(percent+"% are in prison");
+	console.log(percent+"% are in "+stageID);
+
+};
+
+window.percentExcon = function(stageID){
+
+	var count = 0;
+	for(var i=0;i<Sim.people.length;i++){
+		var person = Sim.people[i];
+		if(person.convictions>0){
+			count++;
+		}
+	}
+
+	var percent = Math.round((count/Sim.people.length)*100);
+	console.log(percent+"% have been in prison at some point");
 
 };
 
