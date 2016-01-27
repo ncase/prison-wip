@@ -12,7 +12,7 @@ Sim.init({
 		*********/
 		"born":{
 			box:{
-				label: "BORN",
+				label: "NEW KIDS",
 				x:10, y:35, width:200, height:120,
 				color: Snap.hsl(200,57,30)
 			},
@@ -51,7 +51,7 @@ Sim.init({
 				// Get educated on.
 				person.education++;
 
-				// If you graduate, maybe college, or job! (or not)
+				// If you graduate, maybe college! (or not)
 				if(person.education >= STATS("edu_for_high_school_cert")){
 					if(CHANCE("high_school_to_college")){
 						return person.goto("college");
@@ -90,13 +90,9 @@ Sim.init({
 				// Get educated on.
 				person.education++;
 
-				// If you graduate, maybe job! (or not)
+				// Graduate, go to the job market
 				if(person.education >= STATS("edu_for_college_cert")){
-					if(CHANCE("college_to_job")){
-						return person.goto("employed");
-					}else{
-						return person.goto("unemployed");
-					}
+					return person.goto("unemployed");
 				}
 
 			}
@@ -117,20 +113,45 @@ Sim.init({
 			},
 			during: function(person){
 
-				// Base Rates
-				var chance_i_get_employed = STATS("unemployed_gets_employed");
-				var chance_i_get_convicted = STATS("unemployed_gets_convicted");
+				////////////////
+				// EMPLOYMENT //
+				////////////////
+
+				// Base Rates, based on education.
+				var chance_i_get_employed;
+				if(person.education<4){
+					chance_i_get_employed = STATS("employment_degree_none");
+				}else if(person.education==4){
+					chance_i_get_employed = STATS("employment_degree_high");
+				}else if(person.education<8){
+					chance_i_get_employed = STATS("employment_degree_some_college");
+				}else{
+					chance_i_get_employed = STATS("employment_degree_bachelor");
+				}
 
 				// Am I an excon?
 				if(person.convictions>0){
 					chance_i_get_employed *= (1-STATS("excon_factor_employed")); // *=, coz it's a *relative* cost
-					chance_i_get_convicted = STATS("excon_gets_convicted"); // =, coz it's absolute
 				}
-				
-				// Apply those chances
+
+				// Apply
 				if(Math.random() < chance_i_get_employed){
 					return person.goto("employed");
 				}
+
+				////////////////
+				// CONVICTION //
+				////////////////
+
+				// Base rate
+				var chance_i_get_convicted = STATS("unemployed_gets_convicted");
+				
+				// Am I an excon?
+				if(person.convictions>0){
+					chance_i_get_convicted = STATS("excon_gets_convicted");
+				}
+
+				// Apply
 				if(Math.random() < chance_i_get_convicted){
 					return person.goto("prison");
 				}
@@ -264,26 +285,45 @@ Sim.init({
 			value: 0.04
 		},
 
-		"college_to_job":{ // on graduation
+		////////////////////////////
+		///// EMPLOYMENT STATS /////
+		////////////////////////////
+
+		// National Center for Education Statistics
+		// HEAVILY depends on degree
+		// https://nces.ed.gov/fastfacts/display.asp?id=561
+		// https://nces.ed.gov/programs/digest/d14/tables/dt14_501.50.asp
+		"employment_degree_none":{
 			type: "percent",
-			value: 0.9
+			value: 0.55
+		},
+		"employment_degree_high":{
+			type: "percent",
+			value: 0.67
+		},
+		"employment_degree_some_college":{
+			type: "percent",
+			value: 0.73
+		},
+		"employment_degree_bachelor":{
+			type: "percent",
+			value: 0.82
 		},
 
-		// Unemployed Stats (all Per Year)
-		"unemployed_gets_employed":{
-			type: "percent",
-			value: 0.30
-		},
 		// The Center for Economic and Policy Research
 		// https://web.archive.org/web/20150215035929/http://www.cepr.net/documents/publications/ex-offenders-2010-11.pdf
 		"excon_factor_employed":{
 			type: "percent",
 			value: 0.12
 		},
+
+		// ???
+		// Depends on age.
 		"unemployed_gets_convicted":{
 			type: "percent",
 			value: 0.10
 		},
+
 		// Bureau of Justice Statistics (.gov)
 		// http://www.bjs.gov/content/pub/pdf/rprts05p0510.pdf
 		"excon_gets_convicted":{
@@ -298,13 +338,19 @@ Sim.init({
 			type: "percent",
 			value: 0.05
 		},
+
+		// ???
 		"laid_off":{
 			type: "percent",
-			value: 0.20
+			value: 0.10
 		},
 
-		// Prison Stats (all upon entering)
-		"prison_sentence":{
+		///////////////////////////
+		/////// PRISON STATS //////
+		///////////////////////////
+
+		// ???
+		"prison_sentence":{ // upon entering
 			type: "integer",
 			min:1, max:50,
 			value: 10
@@ -412,11 +458,19 @@ Sim.init({
 			// If you have a degree, show it
 			if(person.education >= STATS("edu_for_high_school_cert")){
 				person.degree.attr({display:"block"});
+
+				// Bachelor's or higher
 				if(person.education >= STATS("edu_for_college_cert")){
+
 					person.degree.attr({
 						fill:"#FFD700",
 						stroke:"#DAA520"
-					}); // university diploma
+					});
+
+				// Some college
+				//}else if(person.education > STATS("edu_for_high_school_cert")){
+
+				// Just high school
 				}else{
 					person.degree.attr({fill:"#FFF"}); // high school diploma
 				}

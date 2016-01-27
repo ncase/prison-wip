@@ -122,23 +122,28 @@ or even to <i>create your own policies</i>.
 		  label="and a {% chance} of being convicted.">
 	</edit>
 
-	<br>
-	And if I graduate, I've got...
-	<edit stat="college_to_job"
-		  label="a {% chance} of getting a job right away.">
-	</edit>
-
 </p>
 
 <p class="edit_container" color="#88aa22">
 
-	Every year I'm unemployed, I have...
-	<edit stat="unemployed_gets_employed"
-		  label="a {% chance} of getting a job,">
+	My chances of getting a job depend on my level of education...
+	<edit stat="employment_degree_none"
+		  label="{% employment} with less than high school">
 	</edit>
-	but if I'm an ex-felon,
+	<edit stat="employment_degree_high"
+		  label="{% employment} with a high school diploma">
+	</edit>
+	<edit stat="employment_degree_some_college"
+		  label="{% employment} with some college">
+	</edit>
+	<edit stat="employment_degree_bachelor"
+		  label="{% employment} with a Bachelor's or higher">
+	</edit>
+
+	<br>
+	However, if I'm an ex-felon...
 	<edit stat="excon_factor_employed"
-		  label="my relative chances are reduced by {%.}">
+		  label="that cuts my relative chances by {%.}">
 	</edit>
 	
 	<br>
@@ -260,3 +265,23 @@ Thank you so much! :)
 
 <!-- Main Script -->
 <script src="scripts/main.js"></script>
+
+<!-- HACK -->
+<script>
+
+window.percentInPrison = function(){
+
+	var prisonCount = 0;
+	for(var i=0;i<Sim.people.length;i++){
+		var person = Sim.people[i];
+		if(person.stageID=="prison"){
+			prisonCount++;
+		}
+	}
+
+	var percent = Math.round((prisonCount/Sim.people.length)*100);
+	console.log(percent+"% are in prison");
+
+};
+
+</script>

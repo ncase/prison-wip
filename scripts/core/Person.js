@@ -5,6 +5,7 @@ function Person(stageID){
 
 	// Properties
 	self.dead = false;
+	self.stageID = stageID;
 	self.stage = Stages[stageID];
 	self.graphics = Sim.peopleSVG.group();
 
@@ -32,6 +33,9 @@ function Person(stageID){
 
 	// Go to a Stage
 	self.goto = function(stageID){
+
+		// ID dang it
+		self.stageID = stageID;
 
 		// If dead, don't. do. anything.
 		if(self.dead) return;
