@@ -46,10 +46,9 @@ START THE SIMULATION
 
 <p>
 Every "person" in this simulation
-has their own life journey,
-from birth to death,
+has their own life story,
 and this simulation gives us 
-100 stories-per-minute.
+100 stories per minute.
 </p>
 
 <p style="text-align:right; font-size:30px">
@@ -61,7 +60,7 @@ By combining <b>systems, stories &amp; statistics</b>,
 maybe we can get a better idea on how to solve our mass incarceration problem!
 This simulation will show us that 
 &mdash;
-contrary to what many of us activists believe
+contrary to what many of us believe
 &mdash;
 injustice is not the <i>cause</i> of a bad system,
 it's the <i>result</i>.
@@ -102,17 +101,15 @@ or even to <i>create your own policies</i>.
 		  label="a {% chance} of dropping out,">
 	</edit>
 	<edit stat="high_school_convicted"
-		  label="and a {% chance} of being arrested.">
+		  label="and a {% chance} of being convicted.">
 	</edit>
 
 	<br>
 	And if I graduate, I've got...
 	<edit stat="high_school_to_college"
-		  label="a {% chance} of going to college,">
+		  label="a {% chance} of going to college.">
 	</edit>
-	<edit stat="high_school_to_job"
-		  label="otherwise, {% chance} I get a job immediately.">
-	</edit>
+
 </p>
 
 <p class="edit_container" color="#1da0e2">
@@ -122,7 +119,7 @@ or even to <i>create your own policies</i>.
 		  label="a {% chance} of dropping out,">
 	</edit>
 	<edit stat="college_convicted"
-		  label="and a {% chance} of being arrested.">
+		  label="and a {% chance} of being convicted.">
 	</edit>
 
 	<br>
@@ -135,21 +132,23 @@ or even to <i>create your own policies</i>.
 
 <p class="edit_container" color="#88aa22">
 
-	While I'm unemployed, every year I have...
+	Every year I'm unemployed, I have...
 	<edit stat="unemployed_gets_employed"
 		  label="a {% chance} of getting a job,">
 	</edit>
-	<edit stat="unemployed_gets_convicted"
-		  label="and a {% chance} of being arrested.">
+	but if I'm an ex-felon,
+	<edit stat="excon_factor_employed"
+		  label="my relative chances are reduced by {%.}">
 	</edit>
-
+	
 	<br>
-	But if I'm an <i>ex-convict</i>, each year I have...
-	<edit stat="excon_gets_employed"
-		  label="a {% chance} of getting a job,">
+	Also, each year I have...
+	<edit stat="unemployed_gets_convicted"
+		  label="a {% chance} of getting convicted,">
 	</edit>
+	but if I'm an ex-felon, I have...
 	<edit stat="excon_gets_convicted"
-		  label="and a {% chance} of going back to prison.">
+		  label="a {% chance} of going back to prison.">
 	</edit>
 
 </p>
@@ -161,7 +160,7 @@ or even to <i>create your own policies</i>.
 		  label="a {% chance} of getting laid off,">
 	</edit>
 	<edit stat="employed_convicted"
-		  label="and a {% chance} of getting arrested.">
+		  label="and a {% chance} of getting convicted.">
 	</edit>
 
 </p>
@@ -207,7 +206,8 @@ Later, I'll also add:
 <p>
 <ul style="padding-left: 20px;">
 <li>
-	Graphs of the simulation's crime rates, unemployment rates, incarceration rates, etc.
+	Graphs of the simulation's crime rates, unemployment rates, incarceration rates, etc
+	over time.
 </li>
 <li>
 	A way to see how your policy changes affected the system,
@@ -222,8 +222,8 @@ Later, I'll also add:
 <p>
 What else do you think this interactive is missing?
 Or, what do you think I should change, or cut out completely?
-What aspects did you like most, which ones did you like least,
-and why?
+What do you think about the UI design?
+What aspects did you like most about this, or least about this, and why?
 </p>
 
 <p>

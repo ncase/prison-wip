@@ -18,7 +18,7 @@ Sim.init({
 			},
 			during: function(person){
 				if(person.age >= STATS("age_for_school")){
-					return person.goto("k-12");
+					return person.goto("high");
 				}
 			}
 		},
@@ -30,9 +30,9 @@ Sim.init({
 		you'll get a high school certificate! And you
 		may go to college! Or not.
 		*********/
-		"k-12":{
+		"high":{
 			box:{
-				label: "K-12",
+				label: "HIGH SCHOOL",
 				x:220, y:35, width:200, height:120,
 				color: Snap.hsl(200,67,40)
 			},
@@ -55,8 +55,6 @@ Sim.init({
 				if(person.education >= STATS("edu_for_high_school_cert")){
 					if(CHANCE("high_school_to_college")){
 						return person.goto("college");
-					}else if(CHANCE("high_school_to_job")){
-						return person.goto("employed");
 					}else{
 						return person.goto("unemployed");
 					}
@@ -119,24 +117,22 @@ Sim.init({
 			},
 			during: function(person){
 
-				// Never incarcerated before
-				if(person.convictions==0){
-					if(CHANCE("unemployed_gets_employed")){
-						return person.goto("employed");
-					}
-					if(CHANCE("unemployed_gets_convicted")){
-						return person.goto("prison");
-					}
+				// Base Rates
+				var chance_i_get_employed = STATS("unemployed_gets_employed");
+				var chance_i_get_convicted = STATS("unemployed_gets_convicted");
+
+				// Am I an excon?
+				if(person.convictions>0){
+					chance_i_get_employed *= (1-STATS("excon_factor_employed")); // *=, coz it's a *relative* cost
+					chance_i_get_convicted = STATS("excon_gets_convicted"); // =, coz it's absolute
 				}
 				
-				// Excon
-				if(person.convictions>0){
-					if(CHANCE("excon_gets_employed")){
-						return person.goto("employed");
-					}
-					if(CHANCE("excon_gets_convicted")){
-						return person.goto("prison");
-					}
+				// Apply those chances
+				if(Math.random() < chance_i_get_employed){
+					return person.goto("employed");
+				}
+				if(Math.random() < chance_i_get_convicted){
+					return person.goto("prison");
 				}
 
 			}
@@ -210,38 +206,64 @@ Sim.init({
 		"sim_start":{ value:false },
 
 		// Some un-editable constants
-		"age_for_school":{ value:6 },
+		"age_for_school":{ value:13 },
 		"age_for_death":{ value:78 },
-		"edu_for_high_school_cert":{ value:12 },
-		"edu_for_college_cert":{ value:16 },
+		"edu_for_high_school_cert":{ value:4 }, // 4 years in high school
+		"edu_for_college_cert":{ value:8 }, // plus 4 years for college
 
-		// Grade/High School Stats
+		////////////////////////////
+		///// HIGH SCHOOL STATS ////
+		////////////////////////////
+
+		// National Center for Education Statistics
+		// https://nces.ed.gov/pubs2012/2012006.pdf
+		// For low-income groups, it's 7% a year.
 		"high_school_dropout":{ // per year
 			type: "percent",
-			value: 0.10
-		},
-		"high_school_convicted":{ // per year
-			type: "percent",
-			value: 0.02
-		},
-		"high_school_to_college":{ // on graduation
-			type: "percent",
-			value: 0.3
-		},
-		"high_school_to_job":{ // on graduation
-			type: "percent",
-			value: 0.3
+			value: 0.07
 		},
 
-		// College Stats
+		// FBI's stats
+		// for males 13-17 it's average 3,400 outta 100,000
+		// but that's for all income levels, can't find anything specific to low-income
+		// https://www.fbi.gov/about-us/cjis/ucr/additional-ucr-publications/age_race_arrest93-01.pdf
+		"high_school_convicted":{ // per year
+			type: "percent",
+			value: 0.03
+		},
+
+		// National Center for Education Statistics
+		// http://nces.ed.gov/programs/coe/indicator_cpa.asp
+		// For low-income groups, it's 50% enrollment. (huh, higher than I thought)
+		"high_school_to_college":{ // on graduation
+			type: "percent",
+			value: 0.49
+		},
+
+		////////////////////////////
+		/////// COLLEGE STATS //////
+		////////////////////////////
+
+		// National Center for Education Statistics
+		// https://nces.ed.gov/fastfacts/display.asp?id=40
+		// 0.59 of students finish a four year course,
+		// meaning for each year, 0.87 of students finish it
+		// since 0.87*0.87*0.87*0.87 ~= 0.59
+		// therefore, 1.00-0.87 = 0.13 of students drop out a year
+		// Again, not for low-income groups, which is probably higher
 		"college_dropout":{ // per year
 			type: "percent",
-			value: 0.10
+			value: 0.13
 		},
+
+		// FBI's stats again
+		// for males 18-22 it's average 3,900 outta 100,000
+		// https://www.fbi.gov/about-us/cjis/ucr/additional-ucr-publications/age_race_arrest93-01.pdf
 		"college_convicted":{ // per year
 			type: "percent",
-			value: 0.02
+			value: 0.04
 		},
+
 		"college_to_job":{ // on graduation
 			type: "percent",
 			value: 0.9
@@ -252,17 +274,21 @@ Sim.init({
 			type: "percent",
 			value: 0.30
 		},
+		// The Center for Economic and Policy Research
+		// https://web.archive.org/web/20150215035929/http://www.cepr.net/documents/publications/ex-offenders-2010-11.pdf
+		"excon_factor_employed":{
+			type: "percent",
+			value: 0.12
+		},
 		"unemployed_gets_convicted":{
 			type: "percent",
 			value: 0.10
 		},
-		"excon_gets_employed":{
-			type: "percent",
-			value: 0.05
-		},
+		// Bureau of Justice Statistics (.gov)
+		// http://www.bjs.gov/content/pub/pdf/rprts05p0510.pdf
 		"excon_gets_convicted":{
 			type: "percent",
-			value: 0.50
+			value: 0.57
 		},
 
 		// Employed Stats (all Per Year)
@@ -293,8 +319,8 @@ Sim.init({
 	*********/
 	observer:{
 		welcome: function(people){
-			// Start with five kids.
-			//for(var i=0;i<5;i++) Sim.newPerson("born");
+			// Start with three kids.
+			for(var i=0;i<3;i++) Sim.newPerson("born");
 		},
 		action: function(people){
 
@@ -315,7 +341,7 @@ Sim.init({
 
 			}
 
-			// Every year, a new person is born (added to the "born" stage)
+			// Every year, one new person is created
 			Sim.newPerson("born");
 
 		}
@@ -329,8 +355,10 @@ Sim.init({
 	person:{
 		born: function(person){
 
-			// Start from zero for everything
-			person.age = 0;
+			// Let's start at puberty.
+			person.age = 11;
+
+			// Start from zero for everything else
 			person.education = 0;
 			person.convictions = 0;
 

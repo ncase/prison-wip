@@ -39,7 +39,7 @@ Sim.init = function(config){
 
 // Update
 Sim.STEP_SPEED = 500;
-Sim.ANIM_SPEED = Sim.STEP_SPEED*1.5;
+Sim.ANIM_SPEED = Sim.STEP_SPEED*1.2;
 Sim.update = function(){
 
 	// Run the OBSERVER function
