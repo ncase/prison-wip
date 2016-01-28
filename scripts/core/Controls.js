@@ -90,7 +90,7 @@ exports.chart1 = new Chart({
 	}
 });
 
-exports.chart2 = new Chart({
+/*exports.chart2 = new Chart({
 	color: "#88aa22",
 	min:0.22, max:0.28,
 	// min:0.30, max:0.39, -- INCLUDING PRISONERS
@@ -106,6 +106,19 @@ exports.chart2 = new Chart({
 		}
 		if(unemployed+employed==0) return 1;
 		return unemployed/(unemployed+employed);
+	}
+});*/
+
+exports.chart2 = new Chart({
+	color: "#b1e21d",
+	min:0.52, max:0.60,
+	svg: document.querySelector("#stat_unemployment > svg"),
+	stats: function(){
+		var count = 0;
+		for(var i=0;i<Sim.people.length;i++){
+			if(Sim.people[i].stageID=="employed") count++;
+		}
+		return count/Sim.people.length;
 	}
 });
 
