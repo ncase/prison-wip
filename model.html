@@ -142,9 +142,7 @@ or even to <i>create your own policies</i>.
 	<edit stat="employment_degree_bachelor"
 		  label="{% employment} with a Bachelor's or higher">
 	</edit>
-
-	<br>
-	However, if I'm an ex-felon...
+	But if I'm an ex-felon...
 	<edit stat="excon_factor_employed"
 		  label="that cuts my chances of employment by {%.}">
 	</edit>
@@ -152,11 +150,7 @@ or even to <i>create your own policies</i>.
 	<br>
 	Also, for each year I'm unemployed...
 	<edit stat="unemployed_gets_convicted"
-		  label="I have a {% chance} of being incarcerated,">
-	</edit>
-	but if I'm an ex-felon,
-	<edit stat="excon_gets_convicted"
-		  label="it's a {% chance} of going back to prison.">
+		  label="I have a {% chance} of being incarcerated.">
 	</edit>
 
 </p>
@@ -180,8 +174,9 @@ or even to <i>create your own policies</i>.
 		  label="I'll get a { year sentence.}">
 	</edit>
 
-	<!--br>
-	And when/if I get out, my chances of landing back in prison are...
+	<br>
+	And when/if I get out, my (additional)
+	chances of returning to prison are...
 	<edit stat="recidivism_1"
 		  label="{%} for my first year after release">
 	</edit>
@@ -190,7 +185,7 @@ or even to <i>create your own policies</i>.
 	</edit>
 	<edit stat="recidivism_3"
 		  label="{%} for my third year after release">
-	</edit-->
+	</edit>
 
 </p>
 
@@ -278,6 +273,25 @@ window.percentIn = function(stageID){
 	}
 
 	var percent = Math.round((prisonCount/Sim.people.length)*100);
+	console.log(percent+"% are in "+stageID);
+
+};
+
+window.percentAdults = function(stageID){
+
+	var adultCount = 0;
+	var prisonCount = 0;
+	for(var i=0;i<Sim.people.length;i++){
+		var person = Sim.people[i];
+		if(person.age>18){
+			adultCount++;
+		}
+		if(person.stageID==stageID){
+			prisonCount++;
+		}
+	}
+
+	var percent = Math.round((prisonCount/adultCount)*100);
 	console.log(percent+"% are in "+stageID);
 
 };

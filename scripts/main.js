@@ -114,6 +114,15 @@ Sim.init({
 			during: function(person){
 
 				////////////////
+				// CONVICTION //
+				////////////////
+
+				// Apply
+				if(CHANCE("unemployed_gets_convicted")){
+					return person.goto("prison");
+				}
+
+				////////////////
 				// EMPLOYMENT //
 				////////////////
 
@@ -137,23 +146,6 @@ Sim.init({
 				// Apply
 				if(Math.random() < chance_i_get_employed){
 					return person.goto("employed");
-				}
-
-				////////////////
-				// CONVICTION //
-				////////////////
-
-				// Base rate
-				var chance_i_get_convicted = STATS("unemployed_gets_convicted");
-				
-				// Am I an excon?
-				if(person.convictions>0){
-					chance_i_get_convicted = STATS("excon_gets_convicted");
-				}
-
-				// Apply
-				if(Math.random() < chance_i_get_convicted){
-					return person.goto("prison");
 				}
 
 			}
@@ -317,14 +309,6 @@ Sim.init({
 			value: 0.12
 		},
 
-		// Bureau of Justice Statistics (.gov)
-		// http://www.bjs.gov/content/pub/pdf/rprts05p0510.pdf
-		// The recidivism rate in the first year after release is 30.4%, crikey.
-		"excon_gets_convicted":{
-			type: "percent",
-			value: 0.30
-		},
-
 		// Bureau of Labor Statistics
 		// http://www.bls.gov/news.release/jolts.t05.htm
 		// Every month, 1.3% of the workforce is laid off.
@@ -346,15 +330,15 @@ Sim.init({
 		// Probability of each type of crime...
 
 		// ??? ABSOLUTELY GUESSING
-		"employed_convicted":{
+		"unemployed_gets_convicted":{
 			type: "percent",
-			value: 0.01
+			value: 0.06
 		},
 
 		// ??? ABSOLUTELY GUESSING
-		"unemployed_gets_convicted":{
+		"employed_convicted":{
 			type: "percent",
-			value: 0.07
+			value: 0.01
 		},
 
 		///////////////////////////
@@ -363,12 +347,31 @@ Sim.init({
 
 		// Bureau of Justice Statistics (.gov)
 		// http://www.bjs.gov/content/pub/html/fjsst/2006/fjs06st.pdf
-		// Average 63.7 months, or 5.3 years. Sentence for just men is similar.
+		// Average 63.7 months, or 5.3 years. Sentence for just men is similar. (65.4 mo)
 		// Drug crimes get 87.2 mo, though, or 7.3 years.
 		"prison_sentence":{ // upon entering
 			type: "integer",
 			min:1, max:25,
 			value: 5
+		},
+
+		// Bureau of Justice Statistics (.gov)
+		// http://www.bjs.gov/content/pub/pdf/rprts05p0510.pdf
+		// 30.4% 43.3% 49.7% 52.9% 55.1%
+		// 0.30 0.43 0.50
+		// difference:
+		// 0.30 0.13 0.07
+		"recidivism_1":{
+			type: "percent",
+			value: 0.30
+		},
+		"recidivism_2":{
+			type: "percent",
+			value: 0.13
+		},
+		"recidivism_3":{
+			type: "percent",
+			value: 0.07
 		}
 
 	},
@@ -401,10 +404,40 @@ Sim.init({
 					continue;
 				}
 
+				// Excon? If you're in employed/unemployed,
+				// here's your (return to prison) recidivism rates...
+				if(person.convictions>0){
+					if(person.stageID=="employed" || person.stageID=="unemployed"){
+
+						// Time since last release, if ever convicted
+						if(person.yearsSinceLastRelease>=0){
+							person.yearsSinceLastRelease++;
+						}
+
+						// Chance diminishes over years...
+						var chance = 0;
+						if(person.yearsSinceLastRelease==1){
+							chance = STATS("recidivism_1");
+						}else if(person.yearsSinceLastRelease==2){
+							chance = STATS("recidivism_2");
+						}else if(person.yearsSinceLastRelease==3){
+							chance = STATS("recidivism_3");
+						}
+
+						// Your chance of returning to prison
+						if(Math.random()<chance){
+							person.goto("prison");
+							continue;
+						}
+
+					}
+				}
+
 			}
 
 			// Every year, new people are created
 			// (add more for lower variance...)
+			// to deal with variance, AVERAGE OVER THE LAST 20 YEARS
 			//for(var i=0;i<2;i++) Sim.newPerson("born");
 			Sim.newPerson("born");
 
@@ -420,7 +453,7 @@ Sim.init({
 		born: function(person){
 
 			// Let's start at puberty.
-			person.age = 11;
+			person.age = 9;
 
 			// Start from zero for everything else
 			person.education = 0;
