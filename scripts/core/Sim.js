@@ -38,9 +38,13 @@ Sim.init = function(config){
 };
 
 // Update
+Sim.isPlaying = false;
 Sim.STEP_SPEED = 600;
 Sim.ANIM_SPEED = Sim.STEP_SPEED*1.1;
 Sim.update = function(){
+
+	// Is Playing?
+	if(!Sim.isPlaying) return;
 
 	// Run the OBSERVER function
 	var observe = Sim.config.observer.action;

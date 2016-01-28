@@ -63,9 +63,30 @@ var EditorSlider = function(self,config){
 	dom.setAttribute("class","edit_slider");
 	self.dom = dom;
 
-	// Create text
+	// Create reset button
+	var initialValue = self.propertyObject[self.propertyName];
+	var color = config.parentNode.getAttribute("color");
+
+	// Draw the arrow, scaled down.
+	var svg = Snap(40,40);
+	var p = svg.path(d="M19.7,36l8.7,5c-2.2,3.7-3.4,8-3.4,12.5c0,13.8,11.2,25,25,25s25-11.2,25-25c0-13.3-10.4-24.2-23.5-25c0,1,0,2,0,3v2.7  c0,2.2-1.6,3.1-3.5,2l-5.4-3.1c-1.9-1.1-5-2.9-6.9-4L30.3,26c-1.9-1.1-1.9-2.9,0-4l5.4-3.1c1.9-1.1,5-2.9,6.9-4l5.4-3  c1.9-1.1,3.5-0.3,3.5,1.8c0,1.4,0,3.2,0,4.8C70.1,19.3,85,34.7,85,53.5c0,19.3-15.7,35-35,35s-35-15.7-35-35  C15,47.1,16.7,41.2,19.7,36z");
+	p.attr({fill:color});
+	p.transform("s0.4,0.4,0,0");
+	
+	var resetButton = svg.node;
+	resetButton.id = "reset";
+	resetButton.onclick = function(){
+		self.input.value = initialValue;
+		oninput();
+		resetButton.style.display = "none";
+	};
+	self.resetButton = resetButton;
+	dom.appendChild(resetButton);
+
+	// Create label text
 	var labelConfig = config.getAttribute("label");
 	var label = document.createElement("div");
+	label.id = "label";
 	label.innerHTML = labelConfig.replace(/\{.*\}/,"<span></span>");
 	dom.appendChild(label);
 	self.label = label;
@@ -93,12 +114,12 @@ var EditorSlider = function(self,config){
 	self.input = input;
 
 	// Set value to current value
-	input.value = self.propertyObject[self.propertyName];
+	input.value = initialValue;
 
 	// Update Label
 	var labelSuffix = labelConfig.match(/\{(.*)\}/)[1];
 	var span = label.querySelector("span");
-	span.style.color = config.parentNode.getAttribute("color");
+	span.style.color = color;
 	self.span = span;
 
 	// What function, depending on the type
@@ -119,7 +140,10 @@ var EditorSlider = function(self,config){
 
 	// Execute it once
 	oninput();
-	input.oninput = oninput;
+	input.oninput = function(){
+		resetButton.style.display = "block";
+		oninput();
+	};
 
 };
 

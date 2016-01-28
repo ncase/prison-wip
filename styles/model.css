@@ -28,13 +28,17 @@ CONTENT
     margin: 0 auto;
     width: 1080px;
 }
-#model{
+#model_container{
 	width:640px;
 	height:480px;
-	/*border: 1px solid #eee;*/
+	
 	position: fixed;
 	right: calc(50% - 540px);
 	top: 100px;
+}
+#model{
+	width:640px;
+	height:420px;
 
 	-webkit-user-select: none;  /* Chrome all / Safari all */
 	-moz-user-select: none;     /* Firefox all */
@@ -103,8 +107,9 @@ PARAMETER UI
 	text-align: left;
 	font-size: 16px;
 	margin: 5px 0;
+	position: relative;
 }
-.edit_slider div{
+.edit_slider div#label{
 	height:1.5em;
 }
 .edit_slider input{
@@ -112,4 +117,83 @@ PARAMETER UI
 }
 .edit_slider span{
 	font-weight: bold;
+}
+.edit_slider svg#reset{
+
+	display:none;
+
+	cursor: pointer;
+
+    position: absolute;
+    left: -56px;
+    top: 3px;
+    width: 40px;
+    height: 40px;
+
+}
+
+/*****************
+SIMULATION UI
+*****************/
+#sim_ui{
+	position: relative;
+	overflow: hidden;
+
+	margin: 7px;
+    margin-top: 15px;
+    width:626px;
+    height: 60px;
+}
+#sim_ui > div{
+	float: left;
+}
+#play_pause{
+	
+	border: 2px solid #ddd;
+
+	width:90px;
+	height:30px;
+
+	margin-right: 10px;
+
+	padding: 10px;
+	font-size: 30px;
+	line-height: 0.8em;
+    text-align: center;
+    color: #aaa;
+    cursor: pointer;
+
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+}
+#play_pause:hover{
+	color: #333;
+}
+/*#sim_ui_divider{
+	width:3px; height:100%;
+	border-left: 2px solid #ddd;
+	border-right: 2px solid #ddd;
+	margin-right:20px;
+}*/
+#sim_info{
+	width:440px;
+	font-size: 16px;
+}
+#sim_info > div{
+	position: relative;
+	overflow: hidden;
+	height:18px;
+}
+#sim_info > div > div{
+	float:left;
+	width:150px;
+	height:16px;
+	text-align: right;
+}
+#sim_info > div > svg{
+	float:right;
+	width:290px;
+	height:16px;
 }

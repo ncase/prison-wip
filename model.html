@@ -9,13 +9,32 @@
 	<!--link rel="icon" type="image/png" href="/favicon.png"-->
 
 	<!-- Styles -->
-	<link rel="stylesheet" type="text/css" href="model.css">
+	<link rel="stylesheet" type="text/css" href="styles/model.css">
 
 </head>
 <body>
 
 	<div id="content">
-		<svg id="model"></svg>
+		<div id="model_container">
+			<svg id="model"></svg>
+			<div id="sim_ui">
+				<div id="play_pause">pause</div>
+				<div id="sim_info">
+					<div id="stat_incarceration" style="color:#000">
+						<div style="letter-spacing: 0.6px;">incarceration rate:</div>
+						<svg></svg>
+					</div>
+					<div id="stat_unemployment" style="color:#88aa22">
+						<div>unemployment rate:</div>
+						<svg></svg>
+					</div>
+					<div id="stat_college" style="color:#1da0e2">
+						<div style="letter-spacing: 0.5px;">adults w/ degrees:</div>
+						<svg></svg>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="words">
 
 <!-- INTRODUCTION -->
@@ -38,11 +57,15 @@ age, race, education, income, crime, etc...
 and made a simulation that <i>connects</i> all these factors together:
 </p>
 
-<p>
-<div class="button" onclick="Sim.config.stats.sim_start = {value:true}; Sim.update();">
+<p style="text-align:right; font-size:30px">
+click start &rarr;
+</p>
+
+<!--p>
+<div class="button" onclick="Sim.isPlaying=true; Sim.update();">
 START THE SIMULATION
 </div>
-</p>
+</p-->
 
 <p>
 Every "person" in this simulation
@@ -52,12 +75,12 @@ and this simulation gives us
 </p>
 
 <p style="text-align:right; font-size:30px">
-click a person to focus on their story &rarr;
+click a person &rarr;
 </p>
 
 <p>
 By combining <b>systems, stories &amp; statistics</b>,
-maybe we can get a better idea on how to solve our mass incarceration problem!
+maybe we can get a better idea on how to tackle our mass incarceration problem!
 This simulation will show us that 
 injustice is not the <i>cause</i> of a bad system,
 it's the <i>result</i>.
@@ -75,16 +98,16 @@ Inside The System
 </h2>
 
 <p>
-The people in this sim, and their lives,
-are based off <b>the real national statistics
+This simulation is based off <b>the real national statistics
 for low-income boys &amp; men.</b>
-(other demographics get caught up in the incarceration system
+(other demographics get caught up in the criminal justice system
 too, of course, but this group is the most at-risk)
 </p>
 
 <p>
-So, here are those stats, with sources attached!
-You can modify the numbers, too &mdash;
+The statistics determine how likely a person is to move from one box to another.
+Here are those stats, with sources attached!
+You can also modify the numbers &mdash;
 to challenge my assumptions,
 to use local data instead of national data,
 to evaluate possible solutions,
@@ -175,7 +198,7 @@ or even to <i>create your own policies</i>.
 	</edit>
 
 	<br>
-	And when/if I get out, my (additional)
+	And when/if I get out, my
 	chances of returning to prison are...
 	<edit stat="recidivism_1"
 		  label="{%} for my first year after release">
@@ -252,63 +275,9 @@ Thank you so much! :)
 <script src="scripts/core/Person.js"></script>
 <script src="scripts/core/Stage.js"></script>
 <script src="scripts/core/Focus.js"></script>
-<!--script src="scripts/core/Slider.js"></script-->
 <script src="scripts/core/Stats.js"></script>
 <script src="scripts/core/Sim.js"></script>
+<script src="scripts/core/Controls.js"></script>
 
 <!-- Main Script -->
 <script src="scripts/main.js"></script>
-
-<!-- HACK -->
-<script>
-
-window.percentIn = function(stageID){
-
-	var prisonCount = 0;
-	for(var i=0;i<Sim.people.length;i++){
-		var person = Sim.people[i];
-		if(person.stageID==stageID){
-			prisonCount++;
-		}
-	}
-
-	var percent = Math.round((prisonCount/Sim.people.length)*100);
-	console.log(percent+"% are in "+stageID);
-
-};
-
-window.percentAdults = function(stageID){
-
-	var adultCount = 0;
-	var prisonCount = 0;
-	for(var i=0;i<Sim.people.length;i++){
-		var person = Sim.people[i];
-		if(person.age>18){
-			adultCount++;
-		}
-		if(person.stageID==stageID){
-			prisonCount++;
-		}
-	}
-
-	var percent = Math.round((prisonCount/adultCount)*100);
-	console.log(percent+"% are in "+stageID);
-
-};
-
-window.percentExcon = function(stageID){
-
-	var count = 0;
-	for(var i=0;i<Sim.people.length;i++){
-		var person = Sim.people[i];
-		if(person.convictions>0){
-			count++;
-		}
-	}
-
-	var percent = Math.round((count/Sim.people.length)*100);
-	console.log(percent+"% have been in prison at some point");
-
-};
-
-</script>

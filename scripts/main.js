@@ -13,7 +13,7 @@ Sim.init({
 		"born":{
 			box:{
 				label: "NEW KIDS",
-				x:10, y:35, width:200, height:120,
+				x:10, y:35, width:200, height:100,
 				color: Snap.hsl(200,57,30)
 			},
 			during: function(person){
@@ -33,7 +33,7 @@ Sim.init({
 		"high":{
 			box:{
 				label: "HIGH SCHOOL",
-				x:220, y:35, width:200, height:120,
+				x:220, y:35, width:200, height:100,
 				color: Snap.hsl(200,67,40)
 			},
 			during: function(person){
@@ -72,7 +72,7 @@ Sim.init({
 		"college":{
 			box:{
 				label: "COLLEGE",
-				x:430, y:35, width:200, height:120,
+				x:430, y:35, width:200, height:100,
 				color: Snap.hsl(200,77,50)
 			},
 			during: function(person){
@@ -108,7 +108,7 @@ Sim.init({
 		"unemployed":{
 			box:{
 				label: "UNEMPLOYED",
-				x:10, y:193, width:305, height:170,
+				x:10, y:173, width:305, height:130,
 				color: Snap.hsl(75,67,40)
 			},
 			during: function(person){
@@ -160,7 +160,7 @@ Sim.init({
 		"employed":{
 			box:{
 				label: "EMPLOYED",
-				x:325, y:193, width:305, height:170,
+				x:325, y:173, width:305, height:130,
 				color: Snap.hsl(75,77,50)
 			},
 			during: function(person){
@@ -186,7 +186,7 @@ Sim.init({
 		"prison":{
 			box:{
 				label: "INCARCERATED",
-				x:10, y:400, width:620, height:70,
+				x:10, y:340, width:620, height:70,
 				color:"#000"
 			},
 			welcome: function(person){
@@ -206,6 +206,7 @@ Sim.init({
 				person.yearsSinceLastRelease = 0;
 			}
 		}
+
 	},
 
 	/*********
@@ -214,9 +215,6 @@ Sim.init({
 	(slider, boolean, or just do NOT allow editing)
 	*********/
 	stats:{
-
-		// Meta
-		"sim_start":{ value:false },
 
 		// Some un-editable constants
 		"age_for_school":{ value:13 },
@@ -387,9 +385,6 @@ Sim.init({
 			for(var i=0;i<3;i++) Sim.newPerson("born");
 		},
 		action: function(people){
-
-			// If the sim's started...
-			if(!STATS("sim_start")) return;
 
 			// For every person...
 			for(var i=0;i<people.length;i++){
