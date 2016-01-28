@@ -17,6 +17,9 @@
 	<div id="content">
 		<div id="model_container">
 			<svg id="model"></svg>
+			<div id="sim_start" onclick="Sim.isPlaying=true; updatePlayPause(); Sim.update(); changeSimUI();">
+				<b>START</b> THIS SIMULATION
+			</div>
 			<div id="sim_ui">
 				<div id="play_pause"></div>
 				<div id="sim_info">
@@ -31,6 +34,9 @@
 					<div id="stat_college" style="color:#1da0e2">
 						<div style="letter-spacing: 0.5px;">adults w/ degrees:</div>
 						<svg></svg>
+					</div>
+					<div style="margin-top: 7px;color: #888;text-align: right;">
+						(note: the sim needs to run for a minute before stats can be shown)
 					</div>
 				</div>
 			</div>

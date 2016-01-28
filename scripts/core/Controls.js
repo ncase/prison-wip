@@ -1,5 +1,11 @@
 (function(exports){
 
+// Change Sim UI
+exports.changeSimUI = function(){
+	document.getElementById("sim_start").style.display = "none";
+	document.getElementById("sim_ui").style.display = "block";
+};
+
 // Play & Pause
 var play_pause = document.getElementById("play_pause");
 play_pause.onclick = function(){
@@ -11,6 +17,7 @@ var updatePlayPause = function(){
 	play_pause.setAttribute("play",Sim.isPlaying);
 };
 updatePlayPause();
+exports.updatePlayPause = updatePlayPause;
 
 // Chart Class
 function Chart(config){

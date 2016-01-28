@@ -383,6 +383,9 @@ Sim.init({
 		welcome: function(people){
 			// Start with three kids.
 			for(var i=0;i<3;i++) Sim.newPerson("born");
+			Sim.people[0].age = 10;
+			Sim.people[1].age = 11;
+			Sim.people[2].age = 12;
 		},
 		action: function(people){
 

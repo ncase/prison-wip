@@ -135,9 +135,37 @@ PARAMETER UI
 /*****************
 SIMULATION UI
 *****************/
+#sim_start{
+
+    margin: 15px auto;
+    width:470px;
+    height: 60px;
+
+    /*border:5px solid #333;*/
+    background: #333;
+    border-radius: 15px;
+    color:#fff;
+    text-align: center;
+
+    font-size: 35px;
+    line-height: 60px;
+
+    cursor: pointer;
+
+    opacity: 1;
+    -webkit-transition: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+
+}
+#sim_start:hover{
+	opacity:0.8;
+}
 #sim_ui{
+	display: none;
+
 	position: relative;
-	overflow: hidden;
 
 	margin: 7px;
     margin-top: 15px;

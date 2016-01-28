@@ -39,8 +39,8 @@ Sim.init = function(config){
 
 // Update
 Sim.isPlaying = false;
-Sim.STEP_SPEED = 100;
-Sim.ANIM_SPEED = 0;//Sim.STEP_SPEED*1.1;
+Sim.STEP_SPEED = 500;
+Sim.ANIM_SPEED = Sim.STEP_SPEED*1.1;
 Sim.update = function(){
 
 	// Is Playing?
