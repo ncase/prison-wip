@@ -431,10 +431,10 @@ Sim.init({
 			}
 
 			// Every year, new people are created
-			// (add more for lower variance...)
-			// to deal with variance, AVERAGE OVER THE LAST 20 YEARS
-			//for(var i=0;i<2;i++) Sim.newPerson("born");
+			// one or two peeps.
+			// Add more people to bring down variance in stats
 			Sim.newPerson("born");
+			if(Math.random()<0.5) Sim.newPerson("born");
 
 		}
 	},
@@ -535,13 +535,6 @@ Sim.init({
 			}
 
 		}
-	},
-
-	/*********
-	GRAPHS?
-	To visually show & analyze stats.
-	(how to compare to Controlled Sim?)
-	*********/
-	graphs:{}
+	}
 
 });

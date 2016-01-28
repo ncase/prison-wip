@@ -149,10 +149,12 @@ SIMULATION UI
 }
 #play_pause{
 	
-	border: 2px solid #ddd;
+	border: 2px solid #000;
 
-	width:90px;
+	width:30px;
 	height:30px;
+
+	overflow: hidden;
 
 	margin-right: 10px;
 
@@ -160,16 +162,22 @@ SIMULATION UI
 	font-size: 30px;
 	line-height: 0.8em;
     text-align: center;
-    color: #aaa;
     cursor: pointer;
 
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    -o-transition: all 0.2s;
-    transition: all 0.2s;
+    opacity:0.3;
+    -webkit-transition: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+}
+#play_pause[play=true]{
+	background-image: url(pause.svg);
+}
+#play_pause[play=false]{
+	background-image: url(play.svg);
 }
 #play_pause:hover{
-	color: #333;
+	opacity:0.8;
 }
 /*#sim_ui_divider{
 	width:3px; height:100%;
@@ -178,7 +186,7 @@ SIMULATION UI
 	margin-right:20px;
 }*/
 #sim_info{
-	width:440px;
+	width:560px;
 	font-size: 16px;
 }
 #sim_info > div{
@@ -194,6 +202,6 @@ SIMULATION UI
 }
 #sim_info > div > svg{
 	float:right;
-	width:290px;
+	width:400px;
 	height:16px;
 }
