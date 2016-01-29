@@ -219,7 +219,6 @@ SIMULATION UI
 }
 #sim_info > div{
 	position: relative;
-	overflow: hidden;
 	height:18px;
 }
 #sim_info > div > div{

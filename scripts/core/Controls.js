@@ -111,7 +111,7 @@ exports.chart1 = new Chart({
 
 exports.chart2 = new Chart({
 	color: "#b1e21d",
-	min:0.52, max:0.60,
+	min:0.52, max:0.62,
 	svg: document.querySelector("#stat_unemployment > svg"),
 	stats: function(){
 		var count = 0;
